@@ -39,10 +39,10 @@ const MyProfileSectionOne = async () => {
                     </div>
                     <p className="leading-8 text-gray-600">{user?.bio}</p>
                     <div className="flex text-2xl gap-5 mt-2">
-                        <Link target="_blank" href={user?.whatsapp ? user.whatsapp : "#"}><FaWhatsapp className={`${user?.whatsapp ? "opacity-100" : "opacity-10"}`} /></Link>
-                        <Link target="_blank" href={user?.whatsapp ? user.facebook : "#"}><FaFacebook className={`${user?.facebook ? "opacity-100" : "opacity-10"}`} /></Link>
-                        <Link target="_blank" href={user?.whatsapp ? user.instagram : "#"}><FaInstagram className={`${user?.instagram ? "opacity-100" : "opacity-10"}`} /></Link>
-                        <Link target="_blank" href={user?.whatsapp ? user.linkedIn : "#"}><FaLinkedin className={`${user?.linkedIn ? "opacity-100" : "opacity-10"}`} /></Link>
+                        <Link href={user?.whatsapp ? user.whatsapp : "#"}><FaWhatsapp className={`${user?.whatsapp ? "opacity-100" : "opacity-10"}`} /></Link>
+                        <Link href={user?.whatsapp ? user.facebook : "#"}><FaFacebook className={`${user?.facebook ? "opacity-100" : "opacity-10"}`} /></Link>
+                        <Link href={user?.whatsapp ? user.instagram : "#"}><FaInstagram className={`${user?.instagram ? "opacity-100" : "opacity-10"}`} /></Link>
+                        <Link href={user?.whatsapp ? user.linkedIn : "#"}><FaLinkedin className={`${user?.linkedIn ? "opacity-100" : "opacity-10"}`} /></Link>
                     </div>
                 </div>
             </div>

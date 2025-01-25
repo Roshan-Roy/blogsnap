@@ -1,16 +1,39 @@
 import { db } from "@/lib/db"
-import { auth } from "@/auth"
 
 export async function PATCH(request: Request) {
-    const session = await auth()
-    /*await db.user.update({
-        where: {
-            id: session?.user.id
-        },
-        data: {
-            whatsapp: ""
-        }
-    })*/
-    const body = await request.json()
-    console.log(body)
+    const {
+        userId,
+        name,
+        bio,
+        whatsapp,
+        facebook,
+        instagram,
+        linkedIn
+    } = await request.json()
+    try {
+        await db.user.update({
+            where: {
+                id: userId,
+            },
+            data: {
+                name,
+                bio,
+                whatsapp,
+                facebook,
+                instagram,
+                linkedIn
+            }
+        })
+        return Response.json({
+            message: "profile updated successfully"
+        }, {
+            status: 200
+        })
+    } catch {
+        return Response.json({
+            message: "profile updation failed"
+        }, {
+            status: 500
+        })
+    }
 }
