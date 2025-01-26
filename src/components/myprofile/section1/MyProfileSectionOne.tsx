@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { FaFacebook, FaWhatsapp, FaInstagram, FaLinkedin } from "react-icons/fa"
+import { FaXTwitter } from "react-icons/fa6"
 import EditProfileModal from "./editprofilemodal/EditProfileModal"
 import { db } from "@/lib/db"
 import { auth } from "@/auth"
@@ -25,10 +26,10 @@ const MyProfileSectionOne = async () => {
                         <EditProfileModal
                             name={user?.name as string}
                             bio={user?.bio}
-                            whatsapp={user?.whatsapp}
                             facebook={user?.facebook}
                             instagram={user?.instagram}
                             linkedIn={user?.linkedIn}
+                            twitter={user?.twitter}
                         />
                     </div>
                     <p className="text-gray-600 text-sm">{user?.email}</p>
@@ -39,10 +40,10 @@ const MyProfileSectionOne = async () => {
                     </div>
                     <p className="leading-8 text-gray-600">{user?.bio}</p>
                     <div className="flex text-2xl gap-5 mt-2">
-                        <Link href={user?.whatsapp ? user.whatsapp : "#"}><FaWhatsapp className={`${user?.whatsapp ? "opacity-100" : "opacity-10"}`} /></Link>
-                        <Link href={user?.whatsapp ? user.facebook : "#"}><FaFacebook className={`${user?.facebook ? "opacity-100" : "opacity-10"}`} /></Link>
-                        <Link href={user?.whatsapp ? user.instagram : "#"}><FaInstagram className={`${user?.instagram ? "opacity-100" : "opacity-10"}`} /></Link>
-                        <Link href={user?.whatsapp ? user.linkedIn : "#"}><FaLinkedin className={`${user?.linkedIn ? "opacity-100" : "opacity-10"}`} /></Link>
+                        <Link href={user?.facebook ? user.facebook : "#"}><FaFacebook className={`${user?.facebook ? "opacity-100" : "opacity-10"}`} /></Link>
+                        <Link href={user?.instagram ? user.instagram : "#"}><FaInstagram className={`${user?.instagram ? "opacity-100" : "opacity-10"}`} /></Link>
+                        <Link href={user?.linkedIn ? user.linkedIn : "#"}><FaLinkedin className={`${user?.linkedIn ? "opacity-100" : "opacity-10"}`} /></Link>
+                        <Link href={user?.twitter ? user.twitter : "#"}><FaXTwitter className={`${user?.twitter ? "opacity-100" : "opacity-10"}`} /></Link>
                     </div>
                 </div>
             </div>

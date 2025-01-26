@@ -14,8 +14,9 @@ model User {
   emailVerified DateTime?
   image         String?
   imageUrl      String          @default("/user.png")
+  publicId      String?
   bio           String          @default("Hey there! I'm using BlogSnap")
-  whatsapp      String          @default("")
+  twitter       String          @default("")
   facebook      String          @default("")
   instagram     String          @default("")
   linkedIn      String          @default("")

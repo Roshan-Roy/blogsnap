@@ -12,6 +12,7 @@
     "@auth/prisma-adapter": "^2.7.4",
     "@nextui-org/react": "^2.6.11",
     "@prisma/client": "^6.2.1",
+    "cloudinary": "^2.5.1",
     "framer-motion": "^11.16.2",
     "next": "15.1.4",
     "next-auth": "^5.0.0-beta.25",
