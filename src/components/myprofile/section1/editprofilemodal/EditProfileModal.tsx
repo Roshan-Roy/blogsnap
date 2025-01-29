@@ -1,6 +1,5 @@
 "use client"
 
-import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import {
   Modal,
@@ -14,65 +13,87 @@ import {
   Spinner,
   Form
 } from "@nextui-org/react"
-
-import { useState } from "react"
+import { useState, useRef, KeyboardEvent } from "react"
+import { MdDeleteOutline } from "react-icons/md"
 import ModalErrorCard from "@/components/modalErrorCard/ModalErrorCard"
+import Image from "next/image"
+
+interface User {
+  id: string;
+  name: string | null;
+  imageUrl: string | null;
+  bio: string;
+  twitter: string;
+  facebook: string;
+  instagram: string;
+  linkedIn: string;
+}
 
 export default function EditProfileModal({
+  id,
   name,
   bio,
+  imageUrl,
   twitter,
   facebook,
   instagram,
   linkedIn
-}: {
-  name: string;
-  bio?: string;
-  twitter?: string;
-  facebook?: string;
-  instagram?: string;
-  linkedIn?: string;
-}) {
-  const { data: session } = useSession()
+}: User) {
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [loadingDelete, setLoadingDeleting] = useState(false)
   const [image, setImage] = useState<File | null>(null)
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const [imagePreview, setImagePreview] = useState<string | null>(imageUrl)
+  const [isImageSet, setIsImageSet] = useState(imagePreview !== null)
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
-
   const styles = {
     input: [
       "placeholder:text-xs"
     ]
   }
+  const handleClearImageSelection = () => {
+    setImage(null)
+    if (fileInputRef.current)
+      fileInputRef.current.value = ""
+  }
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") e.preventDefault()
+  }
   const handleModalClose = () => {
     setError(false)
-    setImage(null)
+    handleClearImageSelection()
+    setImagePreview(imageUrl)
   }
   const handleFormSubmit = async (data: {
     [k: string]: FormDataEntryValue;
   }) => {
-    console.log(image)
+    console.log("submitting")
     setError(false)
     setLoading(true)
     try {
-      const formData = new FormData();
-      formData.append('userId', session?.user.id as string)
-      formData.append('image', image as File)
+      const formData = new FormData()
       formData.append('name', data.name)
       formData.append('bio', data.bio)
+      if (image) formData.append('image', image)
       formData.append('facebook', data.facebook)
       formData.append('instagram', data.instagram)
       formData.append('linkedIn', data.linkedIn)
       formData.append('twitter', data.twitter)
-      const res = await fetch('/api/editprofile', {
+      const res = await fetch(`/api/editprofile/${id}`, {
         method: 'PATCH',
         body: formData
       });
       if (!res.ok)
         throw new Error()
+      const body = await res.json()
+      if (body.data.imageUrl) {
+        setImagePreview(body.data.imageUrl)
+        setIsImageSet(true)
+      }
+      handleClearImageSelection()
       onClose()
-      setImage(null)
       router.refresh()
     } catch {
       setError(true)
@@ -80,35 +101,74 @@ export default function EditProfileModal({
       setLoading(false)
     }
   }
+  const handleImageDelete = async () => {
+    setError(false)
+    setLoadingDeleting(true)
+    try {
+      const res = await fetch(`/api/deleteprofilepicture/${id}`, {
+        method: "DELETE"
+      })
+      if (!res.ok)
+        throw new Error()
+      setImagePreview(null)
+      setIsImageSet(false)
+      handleClearImageSelection()
+      router.refresh()
+    } catch {
+      setError(true)
+    } finally {
+      setLoadingDeleting(false)
+    }
+  }
   return (
     <>
       <Button onPress={onOpen} size="sm" className="w-32 font-semibold bg-gray-800 text-white" disableRipple>Edit Profile</Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={handleModalClose} scrollBehavior="inside" isKeyboardDismissDisabled={loading} isDismissable={!loading} hideCloseButton={loading}>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={handleModalClose} scrollBehavior="inside" isKeyboardDismissDisabled={loading || loadingDelete} isDismissable={!loading && !loadingDelete} hideCloseButton={loading || loadingDelete}>
         <Form validationBehavior="native" onSubmit={(e) => {
           e.preventDefault()
           const data = Object.fromEntries(new FormData(e.currentTarget))
-          if (!loading) handleFormSubmit(data)
+          if (!loading && !loadingDelete) handleFormSubmit(data)
         }} >
           <ModalContent>
             <ModalHeader className="justify-center">Edit profile</ModalHeader>
             <ModalBody className="gap-4 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">
               {error && <ModalErrorCard closeFn={() => setError(false)} />}
-              <input type="file" accept="image/*" onChange={(e) => { if (e.target.files) setImage(e.target.files[0]) }} />
-              <Input label="Name" name="name" type="text" labelPlacement="outside" placeholder="Enter your name" classNames={styles} defaultValue={name} validate={value => {
+              <div className="flex flex-col items-center gap-4 mb-1">
+                <div className="relative min-h-36 w-36 bg-gray-100 rounded-full overflow-hidden">
+                  <Image src={imagePreview ? imagePreview : "/user.png"} alt="preview image" fill />
+                </div>
+                <div className="flex gap-2">
+                  <label htmlFor="image" className="flex justify-center items-center bg-gray-800 text-white w-32 h-10 text-xs font-semibold rounded-xl cursor-pointer">
+                    <span>Change photo</span>
+                  </label>
+                  <input type="file" id="image" accept="image/*" ref={fileInputRef} className="hidden" disabled={loading || loadingDelete} onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      setImage(e.target.files[0])
+                      setImagePreview(URL.createObjectURL(e.target.files[0]))
+                    }
+                  }} />
+                  {isImageSet && <Button onPress={() => {
+                    if (!loading && !loadingDelete) handleImageDelete()
+                  }} isIconOnly>
+                    {loadingDelete ? <Spinner size="sm" color="current" /> : <MdDeleteOutline className="text-xl text-gray-800" />}
+                  </Button>}
+                </div>
+              </div>
+              <Input label="Name" name="name" type="text" labelPlacement="outside" placeholder="Enter your name" classNames={styles} defaultValue={name as string} validate={value => {
                 const trimmedValue = value.trim()
                 if (trimmedValue.length < 1) return "Name is required"
                 else if (trimmedValue.length > 20) return "Name must me less than 20 characters long"
-              }} />
+              }} onKeyDown={handleKeyDown} />
               <Input label="Bio" name="bio" placeholder="Enter your bio" type="text" labelPlacement="outside" classNames={styles} defaultValue={bio} validate={value => {
                 const trimmedValue = value.trim()
                 if (trimmedValue.length < 1) return "Bio is required"
                 else if (trimmedValue.length > 70) return "Bio must be less than 70 characters long"
-              }} />
+              }} onKeyDown={handleKeyDown} />
               <h2 className="text-center pt-3 pb-1 font-semibold">Social Links</h2>
-              <Input label="Facebook" name="facebook" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={facebook} />
-              <Input label="Instagram" name="instagram" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={instagram} />
-              <Input label="Linkedin" name="linkedIn" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={linkedIn} />
-              <Input label="Twitter (X)" name="twitter" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={twitter} />
+              <Input label="Facebook" name="facebook" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={facebook} onKeyDown={handleKeyDown} />
+              <Input label="Instagram" name="instagram" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={instagram} onKeyDown={handleKeyDown} />
+              <Input label="Linkedin" name="linkedIn" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={linkedIn} onKeyDown={handleKeyDown} />
+              <Input label="Twitter (X)" name="twitter" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={twitter} onKeyDown={handleKeyDown} />
             </ModalBody>
             <ModalFooter>
               <Button color="primary" className="bg-gray-800 font-semibold text-xs w-32" type="submit" disableRipple>

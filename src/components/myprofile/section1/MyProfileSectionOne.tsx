@@ -1,11 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
-import { FaFacebook, FaWhatsapp, FaInstagram, FaLinkedin } from "react-icons/fa"
+import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa"
 import { FaXTwitter } from "react-icons/fa6"
 import EditProfileModal from "./editprofilemodal/EditProfileModal"
 import { db } from "@/lib/db"
 import { auth } from "@/auth"
-
 
 const MyProfileSectionOne = async () => {
     const session = await auth()
@@ -17,19 +16,21 @@ const MyProfileSectionOne = async () => {
         })
         return (
             <div className="flex w-5/12 mx-auto justify-center gap-12 mt-10">
-                <div className="relative w-56 h-56">
-                    <Image fill={true} src="/user.png" alt="No profile picture" className="rounded-full" />
+                <div className="relative w-56 h-56 rounded-full overflow-hidden bg-gray-100">
+                    <Image fill={true} src={user?.imageUrl ? user.imageUrl : "/user.png"} alt="No profile picture" />
                 </div>
                 <div className="flex-1 flex flex-col gap-5 text-lg">
                     <div className="flex justify-between">
                         <h1 className="text-3xl font-bold">{user?.name}</h1>
                         <EditProfileModal
+                            id={user?.id as string}
+                            imageUrl={user?.imageUrl as string}
                             name={user?.name as string}
-                            bio={user?.bio}
-                            facebook={user?.facebook}
-                            instagram={user?.instagram}
-                            linkedIn={user?.linkedIn}
-                            twitter={user?.twitter}
+                            bio={user?.bio as string}
+                            facebook={user?.facebook as string}
+                            instagram={user?.instagram as string}
+                            linkedIn={user?.linkedIn as string}
+                            twitter={user?.twitter as string}
                         />
                     </div>
                     <p className="text-gray-600 text-sm">{user?.email}</p>
