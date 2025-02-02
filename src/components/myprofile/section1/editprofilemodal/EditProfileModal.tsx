@@ -15,6 +15,7 @@ import {
 } from "@nextui-org/react"
 import { useState, useRef, KeyboardEvent } from "react"
 import { MdDeleteOutline } from "react-icons/md"
+import { IoCloseSharp } from "react-icons/io5"
 import ModalErrorCard from "@/components/modalErrorCard/ModalErrorCard"
 import Image from "next/image"
 
@@ -44,7 +45,7 @@ export default function EditProfileModal({
   const [loadingDelete, setLoadingDeleting] = useState(false)
   const [image, setImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(imageUrl)
-  const [isImageSet, setIsImageSet] = useState(imagePreview !== null)
+  const [isImageSet, setIsImageSet] = useState(imageUrl !== null)
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
@@ -66,10 +67,13 @@ export default function EditProfileModal({
     handleClearImageSelection()
     setImagePreview(imageUrl)
   }
+  const handleCancelImageSelection = () => {
+    handleClearImageSelection()
+    setImagePreview(imageUrl)
+  }
   const handleFormSubmit = async (data: {
     [k: string]: FormDataEntryValue;
   }) => {
-    console.log("submitting")
     setError(false)
     setLoading(true)
     try {
@@ -147,11 +151,13 @@ export default function EditProfileModal({
                       setImagePreview(URL.createObjectURL(e.target.files[0]))
                     }
                   }} />
-                  {isImageSet && <Button onPress={() => {
+                  {image ? <Button onPress={() => {
+                    if (!loading) handleCancelImageSelection()
+                  }} isIconOnly><IoCloseSharp className="text-xl" /></Button> : isImageSet ? <Button onPress={() => {
                     if (!loading && !loadingDelete) handleImageDelete()
                   }} isIconOnly>
                     {loadingDelete ? <Spinner size="sm" color="current" /> : <MdDeleteOutline className="text-xl text-gray-800" />}
-                  </Button>}
+                  </Button> : null}
                 </div>
               </div>
               <Input label="Name" name="name" type="text" labelPlacement="outside" placeholder="Enter your name" classNames={styles} defaultValue={name as string} validate={value => {
