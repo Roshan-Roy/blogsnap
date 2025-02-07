@@ -78,13 +78,8 @@ export default function EditProfileModal({
     setLoading(true)
     try {
       const formData = new FormData()
-      formData.append('name', data.name)
-      formData.append('bio', data.bio)
+      for (const key in data) formData.append(key, data[key].toString().trim())
       if (image) formData.append('image', image)
-      formData.append('facebook', data.facebook)
-      formData.append('instagram', data.instagram)
-      formData.append('linkedIn', data.linkedIn)
-      formData.append('twitter', data.twitter)
       const res = await fetch(`/api/editprofile/${id}`, {
         method: 'PATCH',
         body: formData
