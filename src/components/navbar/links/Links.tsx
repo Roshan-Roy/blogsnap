@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import CreateBlogModal from "@/components/createBlogModal/CreateBlogModal"
+import CreateBlogModal from "@/components/createblogmodal/CreateBlogModal"
 
 const Links = ({
     icon,

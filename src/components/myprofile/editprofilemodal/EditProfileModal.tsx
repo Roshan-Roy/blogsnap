@@ -16,7 +16,7 @@ import {
 import { useState, useRef, KeyboardEvent } from "react"
 import { MdDeleteOutline } from "react-icons/md"
 import { IoCloseSharp } from "react-icons/io5"
-import ModalErrorCard from "@/components/modalErrorCard/ModalErrorCard"
+import ModalErrorCard from "@/components/modalerrorcard/ModalErrorCard"
 import Image from "next/image"
 
 interface User {
@@ -40,6 +40,14 @@ export default function EditProfileModal({
   instagram,
   linkedIn
 }: User) {
+  const [values, setValues] = useState({
+    name,
+    bio,
+    twitter,
+    facebook,
+    instagram,
+    linkedIn
+  })
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
   const [loadingDelete, setLoadingDeleting] = useState(false)
@@ -87,10 +95,12 @@ export default function EditProfileModal({
       if (!res.ok)
         throw new Error()
       const body = await res.json()
-      if (body.data.imageUrl) {
+      const { name, bio, twitter, facebook, instagram, linkedIn, imageUrl } = body.data
+      if (imageUrl) {
         setImagePreview(body.data.imageUrl)
         setIsImageSet(true)
       }
+      setValues({ name, bio, twitter, facebook, instagram, linkedIn })
       handleClearImageSelection()
       onClose()
       router.refresh()
@@ -133,7 +143,7 @@ export default function EditProfileModal({
             <ModalBody className="gap-4 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">
               {error && <ModalErrorCard closeFn={() => setError(false)} />}
               <div className="flex flex-col items-center gap-4 mb-1">
-                <div className="relative min-h-36 w-36 bg-gray-100 rounded-full overflow-hidden">
+                <div className="relative h-36 w-36 bg-gray-100 rounded-full overflow-hidden">
                   <Image src={imagePreview ? imagePreview : "/user.png"} alt="preview image" fill />
                 </div>
                 <div className="flex gap-2">
@@ -155,21 +165,21 @@ export default function EditProfileModal({
                   </Button> : null}
                 </div>
               </div>
-              <Input label="Name" name="name" type="text" labelPlacement="outside" placeholder="Enter your name" classNames={styles} defaultValue={name as string} validate={value => {
+              <Input label="Name" name="name" type="text" labelPlacement="outside" placeholder="Enter your name" classNames={styles} defaultValue={values.name as string} validate={value => {
                 const trimmedValue = value.trim()
                 if (trimmedValue.length < 1) return "Name is required"
                 else if (trimmedValue.length > 20) return "Name must me less than 20 characters long"
               }} onKeyDown={handleKeyDown} />
-              <Input label="Bio" name="bio" placeholder="Enter your bio" type="text" labelPlacement="outside" classNames={styles} defaultValue={bio} validate={value => {
+              <Input label="Bio" name="bio" placeholder="Enter your bio" type="text" labelPlacement="outside" classNames={styles} defaultValue={values.bio} validate={value => {
                 const trimmedValue = value.trim()
                 if (trimmedValue.length < 1) return "Bio is required"
                 else if (trimmedValue.length > 70) return "Bio must be less than 70 characters long"
               }} onKeyDown={handleKeyDown} />
               <h2 className="text-center pt-3 pb-1 font-semibold">Social Links</h2>
-              <Input label="Facebook" name="facebook" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={facebook} onKeyDown={handleKeyDown} />
-              <Input label="Instagram" name="instagram" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={instagram} onKeyDown={handleKeyDown} />
-              <Input label="Linkedin" name="linkedIn" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={linkedIn} onKeyDown={handleKeyDown} />
-              <Input label="Twitter (X)" name="twitter" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={twitter} onKeyDown={handleKeyDown} />
+              <Input label="Facebook" name="facebook" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={values.facebook} onKeyDown={handleKeyDown} />
+              <Input label="Instagram" name="instagram" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={values.instagram} onKeyDown={handleKeyDown} />
+              <Input label="Linkedin" name="linkedIn" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={values.linkedIn} onKeyDown={handleKeyDown} />
+              <Input label="Twitter (X)" name="twitter" placeholder="https://" type="url" labelPlacement="outside" classNames={styles} defaultValue={values.twitter} onKeyDown={handleKeyDown} />
             </ModalBody>
             <ModalFooter>
               <Button color="primary" className="bg-gray-800 font-semibold text-xs w-32" type="submit" disableRipple>

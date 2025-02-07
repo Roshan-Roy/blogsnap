@@ -6,7 +6,7 @@ import EditProfileModal from "./editprofilemodal/EditProfileModal"
 import { db } from "@/lib/db"
 import { auth } from "@/auth"
 
-const MyProfileSectionOne = async () => {
+const MyProfile = async () => {
     const session = await auth()
     try {
         const user = await db.user.findUnique({
@@ -49,10 +49,10 @@ const MyProfileSectionOne = async () => {
                 </div>
             </div>
         )
-    } catch (e: any) {
+    } catch {
         throw new Error("Something went wrong")
     }
 
 }
 
-export default MyProfileSectionOne
+export default MyProfile
