@@ -13,24 +13,36 @@ import {
     Input,
     Spinner,
     Form,
-    Textarea
+    Textarea,
+    Select,
+    SelectItem
 } from "@nextui-org/react"
-import { useState, useRef, KeyboardEvent } from "react"
-import { IoCloseSharp } from "react-icons/io5"
+import { useState, useRef, KeyboardEvent, useEffect } from "react"
 import ModalErrorCard from "@/components/modalerrorcard/ModalErrorCard"
 import Image from "next/image"
+
+interface Topic {
+    id: string;
+    topic: string;
+}
 
 export default function CreateBlogModal({ icon }: {
     icon: React.ReactElement;
 }) {
     const { data: session } = useSession()
     const [error, setError] = useState(false)
+    const [selectError, setSelectError] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [selectLoading, setSelectLoading] = useState(false)
+    const [selectTopics, setSelectTopics] = useState<Topic[]>([])
     const [image, setImage] = useState<File | null>(null)
     const [imagePreview, setImagePreview] = useState<string | null>(null)
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
     const fileInputRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
+    const item: any[] = [
+
+    ]
     const stylesForInput = {
         input: [
             "placeholder:text-xs"
@@ -41,6 +53,10 @@ export default function CreateBlogModal({ icon }: {
             "placeholder:text-xs mt-1"
         ]
     }
+    const stylesForSelect = {
+        label: "after:content-none",
+    }
+
     const handleClearImageSelection = () => {
         setImage(null)
         setImagePreview(null)
@@ -56,6 +72,7 @@ export default function CreateBlogModal({ icon }: {
     const handleFormSubmit = async (data: {
         [k: string]: FormDataEntryValue;
     }) => {
+        console.log(data)
         setError(false)
         setLoading(true)
         try {
@@ -71,18 +88,34 @@ export default function CreateBlogModal({ icon }: {
             handleClearImageSelection()
             onClose()
             router.refresh()
-        } catch {
+        } catch (e) {
             setError(true)
         } finally {
             setLoading(false)
         }
     }
-
+    const getAllTopics = async () => {
+        setSelectError(false)
+        setSelectLoading(true)
+        try {
+            const res = await fetch("/api/alltopics")
+            if (!res.ok) throw new Error()
+            const body = await res.json()
+            setSelectTopics(body.data)
+        } catch {
+            setSelectError(true)
+        } finally {
+            setSelectLoading(false)
+        }
+    }
+    useEffect(() => {
+        getAllTopics()
+    }, [])
     return (
         <>
             <div onClick={onOpen} className="text-xl p-3 rounded-full cursor-pointer hover:bg-gray-100">{icon}</div>
             <Modal isOpen={isOpen} size="2xl" onOpenChange={onOpenChange} onClose={handleModalClose} scrollBehavior="inside" isKeyboardDismissDisabled={loading} isDismissable={!loading} hideCloseButton={loading}>
-                <Form validationBehavior="native" onSubmit={(e) => {
+                <Form validationBehavior="native" onSubmit={async (e) => {
                     e.preventDefault()
                     const data = Object.fromEntries(new FormData(e.currentTarget))
                     if (!loading) handleFormSubmit(data)
@@ -115,6 +148,16 @@ export default function CreateBlogModal({ icon }: {
                                         }
                                     }} />
                                 </div>
+                            </div>
+                            <div className="flex justify-end items-end gap-2">
+                                <Select label="Topic" classNames={stylesForSelect} name="topic" placeholder="Select a topic" labelPlacement="outside" items={selectTopics} errorMessage="Topic is required" isLoading={selectLoading} isRequired hideEmptyContent>
+                                    {(e) => (
+                                        <SelectItem key={e.topic} className="capitalize">
+                                            {e.topic}
+                                        </SelectItem>
+                                    )}
+                                </Select>
+                                {selectError && <Button onPress={getAllTopics} isIconOnly>Retry</Button>}
                             </div>
                             <Textarea label="Content" name="content" placeholder="Enter your blog content" type="text" labelPlacement="outside" classNames={stylesForTextArea} validate={value => {
                                 const trimmedValue = value.trim()

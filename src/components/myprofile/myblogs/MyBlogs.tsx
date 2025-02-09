@@ -19,7 +19,17 @@ const MyBlogs = async () => {
         return (
             <div className="w-7/12 mx-auto grid grid-cols-3 gap-4 mb-10">
                 {myBlogs.map(e => {
-                    if (e.imageUrl) return <CardWithImage />
+                    if (e.imageUrl) return <CardWithImage
+                        title={e.title}
+                        content={e.content}
+                        topic={e.topic}
+                        imageUrl={e.imageUrl}
+                        noOfLikes={e.likes.length}
+                        noOfComments={e.comments.length}
+                        userName={e.User?.name as string}
+                        userImage={e.User?.imageUrl}
+                        dateOfCreation={e.createdAt}
+                        key={e.id} />
                     return <CardWithoutImage
                         title={e.title}
                         content={e.content}
@@ -35,7 +45,7 @@ const MyBlogs = async () => {
             </div>
         )
     } catch {
-        throw new Error('Something went wrong')
+        throw new Error("Something went wrong")
     }
 
 }

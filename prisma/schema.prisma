@@ -23,8 +23,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
   blogs         Blog[]
-  likes         Likes[]
-  comments      Comments[]
+  likes         Like[]
+  comments      Comment[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
@@ -33,21 +33,21 @@ model User {
 }
 
 model Blog {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   title     String
   content   String
   topic     String
   imageUrl  String?
   publicId  String?
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  User      User?      @relation(fields: [userId], references: [id])
-  userId    String?    @db.ObjectId
-  likes     Likes[]
-  comments  Comments[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  User      User?     @relation(fields: [userId], references: [id])
+  userId    String?   @db.ObjectId
+  likes     Like[]
+  comments  Comment[]
 }
 
-model Likes {
+model Like {
   id     String  @id @default(auto()) @map("_id") @db.ObjectId
   Blog   Blog?   @relation(fields: [blogId], references: [id])
   blogId String? @db.ObjectId
@@ -55,7 +55,7 @@ model Likes {
   userId String? @db.ObjectId
 }
 
-model Comments {
+model Comment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   comment   String
   createdAt DateTime @default(now())
@@ -63,6 +63,11 @@ model Comments {
   blogId    String?  @db.ObjectId
   User      User?    @relation(fields: [userId], references: [id])
   userId    String?  @db.ObjectId
+}
+
+model Topic {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  topic String
 }
 
 model Account {

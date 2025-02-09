@@ -8,15 +8,16 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
         const formData = await request.formData()
         const title = formData.get("title") as string
         const content = formData.get("content") as string
+        const topic = formData.get("topic") as string
         const image = formData.get("image") as File
-
+        
         if (image) {
             const uploadResult: any = await uploadImage(image, "blog_pictures")
             await db.blog.create({
                 data: {
                     title,
                     content,
-                    topic: "technology",
+                    topic,
                     userId: id,
                     imageUrl: uploadResult.secure_url as string,
                     publicId: uploadResult.public_id as string
@@ -27,7 +28,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
                 data: {
                     title,
                     content,
-                    topic: "Technology",
+                    topic,
                     userId: id
                 }
             })
