@@ -40,9 +40,7 @@ export default function CreateBlogModal({ icon }: {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
     const fileInputRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
-    const item: any[] = [
 
-    ]
     const stylesForInput = {
         input: [
             "placeholder:text-xs"
@@ -72,7 +70,6 @@ export default function CreateBlogModal({ icon }: {
     const handleFormSubmit = async (data: {
         [k: string]: FormDataEntryValue;
     }) => {
-        console.log(data)
         setError(false)
         setLoading(true)
         try {
@@ -88,7 +85,7 @@ export default function CreateBlogModal({ icon }: {
             handleClearImageSelection()
             onClose()
             router.refresh()
-        } catch (e) {
+        } catch {
             setError(true)
         } finally {
             setLoading(false)
@@ -149,7 +146,7 @@ export default function CreateBlogModal({ icon }: {
                                     }} />
                                 </div>
                             </div>
-                            <div className="flex justify-end items-end gap-2">
+                            <div className="flex flex-col items-center">
                                 <Select label="Topic" classNames={stylesForSelect} name="topic" placeholder="Select a topic" labelPlacement="outside" items={selectTopics} errorMessage="Topic is required" isLoading={selectLoading} isRequired hideEmptyContent>
                                     {(e) => (
                                         <SelectItem key={e.topic} className="capitalize">
@@ -157,7 +154,10 @@ export default function CreateBlogModal({ icon }: {
                                         </SelectItem>
                                     )}
                                 </Select>
-                                {selectError && <Button onPress={getAllTopics} isIconOnly>Retry</Button>}
+                                {selectError && <div className="flex gap-3 items-center text-sm my-3">
+                                    <p>Failed to load topics</p>
+                                    <Button onPress={getAllTopics} size="sm">Retry</Button>
+                                </div>}
                             </div>
                             <Textarea label="Content" name="content" placeholder="Enter your blog content" type="text" labelPlacement="outside" classNames={stylesForTextArea} validate={value => {
                                 const trimmedValue = value.trim()

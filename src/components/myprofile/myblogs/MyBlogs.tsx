@@ -20,6 +20,7 @@ const MyBlogs = async () => {
             <div className="w-7/12 mx-auto grid grid-cols-3 gap-4 mb-10">
                 {myBlogs.map(e => {
                     if (e.imageUrl) return <CardWithImage
+                        id={e.id}
                         title={e.title}
                         content={e.content}
                         topic={e.topic}
@@ -31,6 +32,7 @@ const MyBlogs = async () => {
                         dateOfCreation={e.createdAt}
                         key={e.id} />
                     return <CardWithoutImage
+                        id={e.id}
                         title={e.title}
                         content={e.content}
                         topic={e.topic}

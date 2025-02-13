@@ -1,4 +1,3 @@
-import cloudinary from "@/lib/cloudinary"
 import { db } from "@/lib/db"
 import uploadImage from "@/lib/upload-image"
 

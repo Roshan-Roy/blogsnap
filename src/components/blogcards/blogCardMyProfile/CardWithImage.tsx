@@ -1,11 +1,13 @@
+"use client"
+
 import Image from 'next/image'
 import React from 'react'
 import { MdDeleteOutline } from "react-icons/md"
-import { MdModeEditOutline } from "react-icons/md"
-import Link from 'next/link'
+import EditBlogModal from '@/components/editblogmodal/EditBlogModal'
 import formatDate from '@/lib/format-date'
 
 interface Card {
+    id: string;
     title: string;
     content: string;
     topic: string;
@@ -18,6 +20,7 @@ interface Card {
 }
 
 const CardWithImage = ({
+    id,
     title,
     content,
     topic,
@@ -29,7 +32,7 @@ const CardWithImage = ({
     dateOfCreation
 }: Card) => {
     return (
-        <Link className="block" href="#">
+        <div className="cursor-pointer">
             <div className="rounded-[20px] overflow-hidden shadow-[0px_0px_7px_0px_#ddd]">
                 <div className="relative h-44">
                     <Image src={imageUrl} alt="profile picture" fill />
@@ -52,9 +55,7 @@ const CardWithImage = ({
                             </div>
                         </div>
                         <div className="flex text-xl">
-                            <div className="p-2 hover:bg-gray-200 rounded-full">
-                                <MdModeEditOutline className="cursor-pointer" />
-                            </div>
+                            <EditBlogModal id={id} title={title} content={content} />
                             <div className="p-2 hover:bg-gray-200 rounded-full">
                                 <MdDeleteOutline className="cursor-pointer" />
                             </div>
@@ -62,7 +63,7 @@ const CardWithImage = ({
                     </div>
                 </div>
             </div>
-        </Link>
+        </div>
     )
 }
 
