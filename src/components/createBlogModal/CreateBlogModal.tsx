@@ -18,7 +18,7 @@ import {
     SelectItem
 } from "@nextui-org/react"
 import { useState, useRef, KeyboardEvent, useEffect } from "react"
-import ModalErrorCard from "@/components/modalerrorcard/ModalErrorCard"
+import ModalErrorCard from "@/components/modalerrorcards/ModalErrorCardOne"
 import Image from "next/image"
 
 interface Topic {

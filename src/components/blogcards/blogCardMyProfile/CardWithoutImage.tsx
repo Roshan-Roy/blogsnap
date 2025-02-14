@@ -2,8 +2,8 @@
 
 import Image from 'next/image'
 import React from 'react'
-import { MdDeleteOutline } from "react-icons/md"
 import EditBlogModal from '@/components/editblogmodal/EditBlogModal'
+import DeleteBlogModal from '@/components/deleteblogmodal/DeleteBlogModal'
 import formatDate from '@/lib/format-date'
 
 interface Card {
@@ -53,9 +53,7 @@ const CardWithoutImage = ({
                         </div>
                         <div className="flex text-xl">
                             <EditBlogModal id={id} title={title} content={content} />
-                            <div className="p-2 hover:bg-gray-200 rounded-full">
-                                <MdDeleteOutline className="cursor-pointer" />
-                            </div>
+                            <DeleteBlogModal id={id} />
                         </div>
                     </div>
                 </div>

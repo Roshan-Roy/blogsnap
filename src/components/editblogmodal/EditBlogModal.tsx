@@ -14,7 +14,7 @@ import {
     Textarea,
 } from "@nextui-org/react"
 import { useState, KeyboardEvent } from "react"
-import ModalErrorCard from "@/components/modalerrorcard/ModalErrorCard"
+import ModalErrorCard from "@/components/modalerrorcards/ModalErrorCardOne"
 import { MdModeEditOutline } from "react-icons/md"
 
 
@@ -99,7 +99,7 @@ export default function EditBlogModal({ id, title, content }: {
                                 const trimmedValue = value.trim()
                                 if (trimmedValue.length < 1) return "Content is required"
                                 else if (trimmedValue.length > 10000) return "Content must be less than 10000 characters long"
-                            }} onKeyDown={handleKeyDown} maxRows={100} minRows={20} defaultValue={values.content} />
+                            }} onKeyDown={handleKeyDown} maxRows={100} minRows={10} defaultValue={values.content} />
                         </ModalBody>
                         <ModalFooter>
                             <Button color="primary" className="bg-gray-800 font-semibold text-xs w-32" type="submit" disableRipple>

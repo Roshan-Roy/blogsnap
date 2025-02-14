@@ -38,7 +38,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
         }, {
             status: 201
         })
-    } catch (e) {
+    } catch {
         return Response.json({
             message: "blog creation failed"
         }, {

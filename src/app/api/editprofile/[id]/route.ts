@@ -65,8 +65,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
         }, {
             status: 200
         })
-    } catch (e) {
-        console.log(e)
+    } catch {
         return Response.json({
             message: "profile updation failed"
         }, {

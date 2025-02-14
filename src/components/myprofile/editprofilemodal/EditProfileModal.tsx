@@ -16,7 +16,7 @@ import {
 import { useState, useRef, KeyboardEvent } from "react"
 import { MdDeleteOutline } from "react-icons/md"
 import { IoCloseSharp } from "react-icons/io5"
-import ModalErrorCard from "@/components/modalerrorcard/ModalErrorCard"
+import ModalErrorCard from "@/components/modalerrorcards/ModalErrorCardOne"
 import Image from "next/image"
 
 interface User {

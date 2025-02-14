@@ -13,7 +13,7 @@ export async function GET() {
         }, {
             status: 200
         })
-    } catch (e) {
+    } catch {
         return Response.json({
             message: "Something went wrong"
         }, {

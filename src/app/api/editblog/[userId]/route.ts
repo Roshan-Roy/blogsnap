@@ -22,9 +22,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ us
             message: "blog updated successfully",
             data: updatedBlog
         }, {
-            status: 201
+            status: 200
         })
-    } catch (e) {
+    } catch {
         return Response.json({
             message: "blog updation failed"
         }, {
