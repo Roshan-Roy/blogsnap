@@ -5,6 +5,7 @@ import React from 'react'
 import DeleteBlogModal from '@/components/deleteblogmodal/DeleteBlogModal'
 import EditBlogModal from '@/components/editblogmodal/EditBlogModal'
 import formatDate from '@/lib/format-date'
+import { useRouter } from 'next/navigation'
 
 interface Card {
     id: string;
@@ -31,11 +32,12 @@ const CardWithImage = ({
     userImage,
     dateOfCreation
 }: Card) => {
+    const router = useRouter()
     return (
-        <div className="cursor-pointer">
+        <div className="cursor-pointer" onClick={() => router.push(`/blog/${id}`)}>
             <div className="rounded-[20px] overflow-hidden shadow-[0px_0px_7px_0px_#ddd]">
                 <div className="relative h-44">
-                    <Image src={imageUrl} alt="profile picture" fill />
+                    <Image src={imageUrl} alt="cover image" quality={50} fill />
                     <div className="absolute bg-gray-800 text-white font-semibold right-3 top-3 rounded-full px-5 py-2 text-[10px]">{topic}</div>
                 </div>
                 <div className="px-6 py-4">

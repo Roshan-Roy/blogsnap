@@ -12,29 +12,37 @@ import { useState } from "react"
 import ModalErrorCardTwo from "../modalerrorcards/ModalErrorCardTwo"
 import { useSession } from "next-auth/react"
 import { Spinner } from "@nextui-org/react"
+import { useRouter } from "next/navigation"
 
 const DeleteBlogModal = ({
     id
 }: {
     id: string;
 }) => {
+    const router = useRouter()
     const { data: session } = useSession()
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
     const handleDeleteBtnClick = async () => {
         setLoading(true)
+        setError(false)
         try {
-            const formData = new FormData()
-            formData.append("blogid", id)
             const res = await fetch(`/api/deleteblog/${session?.user.id}`, {
                 method: 'DELETE',
-                body: formData
-            });
+                body: JSON.stringify({
+                    blogId: id
+                })
+            })
+            if (!res.ok) {
+                throw new Error()
+            }
+            onClose()
+            router.refresh()
         } catch {
-
+            setError(true)
         } finally {
-
+            setLoading(false)
         }
     }
     return (
@@ -45,7 +53,7 @@ const DeleteBlogModal = ({
             }}>
                 <MdDeleteOutline className="cursor-pointer" />
             </div>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange} isKeyboardDismissDisabled={loading} isDismissable={!loading} hideCloseButton={loading}>
+            <Modal onClick={e => e.stopPropagation()} isOpen={isOpen} onClose={() => setError(false)} onOpenChange={onOpenChange} isKeyboardDismissDisabled={loading} isDismissable={!loading} hideCloseButton={loading}>
                 <ModalContent>
                     <ModalBody className="items-center pt-10 pb-8">
                         <RiDeleteBinLine className="text-7xl" />
@@ -55,7 +63,10 @@ const DeleteBlogModal = ({
                     {error && <ModalErrorCardTwo closeFn={() => setError(false)} />}
                     <ModalFooter>
                         {!loading &&
-                            <Button color="default" className="font-semibold text-xs flex-1" onPress={onClose} disableRipple>
+                            <Button color="default" className="font-semibold text-xs flex-1" onPress={() => {
+                                onClose()
+                                setError(false)
+                            }} disableRipple>
                                 Cancel
                             </Button>
                         }

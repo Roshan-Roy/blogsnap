@@ -12,6 +12,9 @@ const MyProfile = async () => {
         const user = await db.user.findUnique({
             where: {
                 id: session?.user.id
+            },
+            include: {
+                blogs: true
             }
         })
         return (
@@ -35,7 +38,7 @@ const MyProfile = async () => {
                     </div>
                     <p className="text-gray-600 text-sm">{user?.email}</p>
                     <div className="flex justify-between">
-                        <p className="flex-1"><span className="font-bold text-2xl mr-2">0</span>Posts</p>
+                        <p className="flex-1"><span className="font-bold text-2xl mr-2">{user?.blogs.length}</span>Posts</p>
                         <p className="flex-1 text-center"><span className="font-bold text-2xl mr-2">0</span>Followers</p>
                         <p className="flex-1 text-right"><span className="font-bold text-2xl mr-2">0</span>Following</p>
                     </div>

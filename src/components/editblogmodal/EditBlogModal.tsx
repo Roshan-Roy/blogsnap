@@ -80,7 +80,7 @@ export default function EditBlogModal({ id, title, content }: {
             }}>
                 <MdModeEditOutline />
             </div>
-            <Modal isOpen={isOpen} size="2xl" onOpenChange={onOpenChange} scrollBehavior="inside" isKeyboardDismissDisabled={loading} isDismissable={!loading} hideCloseButton={loading}>
+            <Modal onClick={e => e.stopPropagation()} isOpen={isOpen} size="2xl" onOpenChange={onOpenChange} scrollBehavior="inside" isKeyboardDismissDisabled={loading} isDismissable={!loading} hideCloseButton={loading}>
                 <Form validationBehavior="native" onSubmit={async (e) => {
                     e.preventDefault()
                     const data = Object.fromEntries(new FormData(e.currentTarget))

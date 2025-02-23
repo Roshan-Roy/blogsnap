@@ -1,10 +1,23 @@
 import { db } from "@/lib/db"
+import cloudinary from "@/lib/cloudinary"
 
 export async function DELETE(request: Request, { params }: { params: Promise<{ userId: string }> }) {
     try {
         const { userId } = await params
-        const formData = await request.formData()
-        const blogId = formData.get("blogid") as string
+        const { blogId } = await request.json()
+        const blog = await db.blog.findUnique({
+            where: {
+                id: blogId,
+                userId
+            }
+        })
+        if (blog?.publicId) {
+            const deleteResult = await cloudinary.uploader.destroy(blog.publicId)
+            console.log(deleteResult)
+            if (deleteResult.result !== "ok") {
+                throw new Error()
+            }
+        }
         await db.blog.delete({
             where: {
                 id: blogId,

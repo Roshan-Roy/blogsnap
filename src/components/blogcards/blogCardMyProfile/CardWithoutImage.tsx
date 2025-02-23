@@ -5,6 +5,7 @@ import React from 'react'
 import EditBlogModal from '@/components/editblogmodal/EditBlogModal'
 import DeleteBlogModal from '@/components/deleteblogmodal/DeleteBlogModal'
 import formatDate from '@/lib/format-date'
+import { useRouter } from 'next/navigation'
 
 interface Card {
     id: string;
@@ -29,8 +30,9 @@ const CardWithoutImage = ({
     userImage,
     dateOfCreation
 }: Card) => {
+    const router = useRouter()
     return (
-        <div className="cursor-pointer">
+        <div className="cursor-pointer" onClick={() => router.push(`/blog/${id}`)}>
             <div className="rounded-[20px] overflow-hidden shadow-[0px_0px_7px_0px_#ddd] h-[380px]">
                 <div className="flex justify-end pt-3 pr-3">
                     <div className="bg-gray-800 text-white font-semibold right-3 top-3 rounded-full px-5 py-2 text-[10px]">{topic}</div>
