@@ -2,24 +2,39 @@
 
 import { useRouter } from "next/navigation"
 import { useSession } from "next-auth/react"
-import { Spinner } from "@nextui-org/react"
+import {
+    Spinner,
+    Modal,
+    ModalContent,
+    ModalHeader,
+    ModalBody,
+    useDisclosure
+} from "@nextui-org/react"
 import { useState } from "react"
 import { FaRegHeart, FaHeart } from "react-icons/fa"
+import LikedUsersCard from "./likeduserscard/LikedUsersCard"
+
+interface likedUsers {
+    id: string;
+    name: string;
+    email: string;
+    image: string;
+}
 
 const BlogLikeButton = ({
     blogId,
     initialLiked,
-    initialNoOfLikes
+    likedUsers
 }: {
     blogId: string;
     initialLiked: boolean;
-    initialNoOfLikes: number;
+    likedUsers: likedUsers[];
 }) => {
     const router = useRouter()
     const { data: session } = useSession()
+    const { isOpen, onOpen, onOpenChange } = useDisclosure()
     const [loading, setLoading] = useState(false)
     const [liked, setLiked] = useState(initialLiked)
-    const [noOfLikes, setNoOfLikes] = useState(initialNoOfLikes)
 
     const handleLikeBtnClick = async () => {
         setLoading(true)
@@ -32,7 +47,6 @@ const BlogLikeButton = ({
             })
             if (res.ok) {
                 setLiked(false)
-                setNoOfLikes(e => e -= 1)
                 router.refresh()
             }
         } else {
@@ -44,21 +58,30 @@ const BlogLikeButton = ({
             })
             if (res.ok) {
                 setLiked(true)
-                setNoOfLikes(e => e += 1)
                 router.refresh()
             }
         }
         setLoading(false)
     }
-
+    console.log(likedUsers)
     return (
-        <div className="flex items-center gap-2 cursor-pointer" onClick={() => {
-            if (!loading) handleLikeBtnClick()
-        }}>
-            <div className="border-2 w-10 h-10 rounded-full flex justify-center items-center">
-                {loading ? <Spinner size="sm" color="default" /> : liked ? <FaHeart className="text-red-600"/> : <FaRegHeart />}
+        <div className="flex items-center gap-1">
+            <div className="border-2 w-10 h-10 rounded-full flex justify-center items-center cursor-pointer" onClick={(e) => {
+                if (!loading) handleLikeBtnClick()
+            }}>
+                {loading ? <Spinner size="sm" color="default" /> : liked ? <FaHeart className="text-red-600" /> : <FaRegHeart />}
             </div>
-            <span className="text-sm font-semibold">{noOfLikes}</span>
+            <span onClick={onOpen} className="text-sm font-semibold p-2 rounded-full cursor-pointer">{likedUsers.length}</span>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior="inside">
+                <ModalContent>
+                    <ModalHeader className="justify-center border-b-1">{likedUsers.length} {likedUsers.length <= 1 ? "Like" : "Likes"}</ModalHeader>
+                    <ModalBody className="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">
+                        <div className=" h-[420px]">
+                            {likedUsers.map(e => <LikedUsersCard key={e.id} {...e} />)}
+                        </div>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
         </div>
     )
 }

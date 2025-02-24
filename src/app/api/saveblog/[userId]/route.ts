@@ -5,7 +5,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ use
         const { userId } = await params
         const { blogId } = await request.json()
 
-        await db.like.create({
+        await db.saved.create({
             data: {
                 userId,
                 blogId
@@ -13,13 +13,13 @@ export async function POST(request: Request, { params }: { params: Promise<{ use
         })
 
         return Response.json({
-            message: "blog liked successfully",
+            message: "blog saved successfully",
         }, {
             status: 200
         })
     } catch {
         return Response.json({
-            message: "blog liking failed"
+            message: "blog saving failed"
         }, {
             status: 500
         })

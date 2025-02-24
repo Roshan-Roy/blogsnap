@@ -17,7 +17,6 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ us
                 content
             }
         })
-        console.log(updatedBlog)
         return Response.json({
             message: "blog updated successfully",
             data: updatedBlog

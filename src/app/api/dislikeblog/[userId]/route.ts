@@ -19,7 +19,7 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ u
         })
     } catch {
         return Response.json({
-            message: "blog dislike failed"
+            message: "blog disliking failed"
         }, {
             status: 500
         })

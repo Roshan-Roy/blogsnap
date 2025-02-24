@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { FaRegComment, FaRegBookmark } from 'react-icons/fa'
 import BlogLikeButton from '@/components/blogpage/likebutton/BlogLikeButton'
 import { auth } from '@/auth'
+import BlogSaveButton from '@/components/blogpage/savebutton/BlogSaveButton'
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
     const session = await auth()
@@ -20,25 +21,26 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 likes: {
                     include: {
                         User: true
+                    },
+                    orderBy: {
+                        createdAt: "desc"
                     }
                 },
+                saved: true,
                 User: true
             }
         })
-        console.log(blog)
         if (!blog) return <p>Blog Not found</p>
         return (
-            <div className="w-7/12 mx-auto pt-8 pb-16 flex flex-col gap-6">
-                <h1 className="text-5xl leading-snug">{blog.title}</h1>
+            <div className="w-7/12 mx-auto pt-8 pb-16 flex flex-col gap-7">
+                <h1 className="text-6xl leading-snug font-semibold">{blog.title}</h1>
                 <BlogPageProfile name={blog.User?.name as string} image={blog.User?.imageUrl as string} date={formatDate(blog.createdAt)} />
                 <div className="border-y-1 h-14 flex items-center justify-between text-xl px-3 text-gray-600">
                     <div className="flex gap-5 items-center">
-                        <BlogLikeButton blogId={blog.id} initialNoOfLikes={blog.likes.length} initialLiked={blog.likes.some(e => e.userId === session?.user.id)} />
+                        <BlogLikeButton blogId={blog.id} initialLiked={blog.likes.some(e => e.userId === session?.user.id)} likedUsers={blog.likes.map(e => ({ name: e.User?.name as string, id: e.User?.id as string, image: e.User?.imageUrl as string, email: e.User?.email as string }))} />
                         <FaRegComment />
                     </div>
-                    <div>
-                        <FaRegBookmark />
-                    </div>
+                    <BlogSaveButton blogId={blog.id} initialSaved={blog.saved.some(e => e.userId === session?.user.id)} />
                 </div>
                 {blog.imageUrl &&
                     <div className="relative w-full h-[490px] overflow-hidden rounded-xl">

@@ -1,7 +1,8 @@
 "use client"
 
-import { Button } from '@nextui-org/react'
+import { Button, Link } from '@nextui-org/react'
 import Image from 'next/image'
+
 
 const BlogPageProfile = ({
     name,
@@ -23,8 +24,8 @@ const BlogPageProfile = ({
                     <p className="text-gray-500">{date}</p>
                 </div>
             </div>
-            <Button color="primary" className="bg-gray-800 font-semibold text-xs w-24" disableRipple>
-                Follow
+            <Button as={Link} color="primary" className="bg-gray-800 font-semibold text-xs w-32" disableRipple>
+                View Profile
             </Button>
         </div>
     )

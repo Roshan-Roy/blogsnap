@@ -14,6 +14,9 @@ const MyBlogs = async () => {
                 likes: true,
                 comments: true,
                 User: true
+            },
+            orderBy: {
+                createdAt: "desc"
             }
         })
         return (
