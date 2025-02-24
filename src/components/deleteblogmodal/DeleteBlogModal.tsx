@@ -47,13 +47,10 @@ const DeleteBlogModal = ({
     }
     return (
         <>
-            <div className="p-2 hover:bg-gray-200 rounded-full" onClick={e => {
-                e.stopPropagation()
-                onOpen()
-            }}>
+            <div className="p-2 hover:bg-gray-200 rounded-full" onClick={onOpen}>
                 <MdDeleteOutline className="cursor-pointer" />
             </div>
-            <Modal onClick={e => e.stopPropagation()} isOpen={isOpen} onClose={() => setError(false)} onOpenChange={onOpenChange} isKeyboardDismissDisabled={loading} isDismissable={!loading} hideCloseButton={loading}>
+            <Modal isOpen={isOpen} onClose={() => setError(false)} onOpenChange={onOpenChange} isKeyboardDismissDisabled={loading} isDismissable={!loading} hideCloseButton={loading}>
                 <ModalContent>
                     <ModalBody className="items-center pt-10 pb-8">
                         <RiDeleteBinLine className="text-7xl" />

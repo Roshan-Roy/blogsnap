@@ -74,13 +74,10 @@ export default function EditBlogModal({ id, title, content }: {
 
     return (
         <>
-            <div className="p-2 hover:bg-gray-200 rounded-full" onClick={e => {
-                e.stopPropagation()
-                onOpen()
-            }}>
+            <div className="p-2 hover:bg-gray-200 rounded-full" onClick={onOpen}>
                 <MdModeEditOutline />
             </div>
-            <Modal onClick={e => e.stopPropagation()} isOpen={isOpen} size="2xl" onOpenChange={onOpenChange} scrollBehavior="inside" isKeyboardDismissDisabled={loading} isDismissable={!loading} hideCloseButton={loading}>
+            <Modal isOpen={isOpen} size="2xl" onOpenChange={onOpenChange} scrollBehavior="inside" isKeyboardDismissDisabled={loading} isDismissable={!loading} hideCloseButton={loading}>
                 <Form validationBehavior="native" onSubmit={async (e) => {
                     e.preventDefault()
                     const data = Object.fromEntries(new FormData(e.currentTarget))
