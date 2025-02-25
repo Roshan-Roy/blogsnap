@@ -119,7 +119,7 @@ export default function CreateBlogModal({ icon }: {
                 }} >
                     <ModalContent>
                         <ModalHeader className="justify-center">Add New Blog</ModalHeader>
-                        <ModalBody className="gap-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">
+                        <ModalBody className="gap-4 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">
                             {error && <ModalErrorCard closeFn={() => setError(false)} />}
                             <Input label="Title" name="title" type="text" labelPlacement="outside" placeholder="Enter your blog title" classNames={stylesForInput} validate={value => {
                                 const trimmedValue = value.trim()

@@ -1,5 +1,6 @@
 import { Button, Link } from "@nextui-org/react"
 import Image from "next/image"
+import { useSession } from "next-auth/react";
 
 const LikedUsersCard = ({
     id,
@@ -12,6 +13,7 @@ const LikedUsersCard = ({
     email: string;
     image: string;
 }) => {
+    const { data: session } = useSession()
     return (
         <div className="flex justify-between items-center h-[70px]">
             <div className="flex gap-4 items-center">
@@ -19,7 +21,7 @@ const LikedUsersCard = ({
                     <Image alt="profile picture" src={image ? image : "/user.png"} fill />
                 </div>
                 <div className="flex gap-1 flex-col">
-                    <span>{name}</span>
+                    <span>{name} {session?.user.id === id && "(You)"}</span>
                     <span className="text-xs text-gray-500">{email}</span>
                 </div>
             </div>

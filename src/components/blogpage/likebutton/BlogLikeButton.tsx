@@ -65,18 +65,18 @@ const BlogLikeButton = ({
     }
     console.log(likedUsers)
     return (
-        <div className="flex items-center gap-1">
+        <div className="flex items-center">
             <div className="border-2 w-10 h-10 rounded-full flex justify-center items-center cursor-pointer" onClick={(e) => {
                 if (!loading) handleLikeBtnClick()
             }}>
                 {loading ? <Spinner size="sm" color="default" /> : liked ? <FaHeart className="text-red-600" /> : <FaRegHeart />}
             </div>
             <span onClick={onOpen} className="text-sm font-semibold p-2 rounded-full cursor-pointer">{likedUsers.length}</span>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior="inside">
-                <ModalContent>
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior="inside" radius="sm">
+                <ModalContent className="pb-4">
                     <ModalHeader className="justify-center border-b-1">{likedUsers.length} {likedUsers.length <= 1 ? "Like" : "Likes"}</ModalHeader>
-                    <ModalBody className="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">
-                        <div className=" h-[420px]">
+                    <ModalBody className="scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">
+                        <div className="h-[420px]">
                             {likedUsers.map(e => <LikedUsersCard key={e.id} {...e} />)}
                         </div>
                     </ModalBody>

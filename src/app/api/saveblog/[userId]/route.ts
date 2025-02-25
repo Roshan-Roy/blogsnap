@@ -15,7 +15,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ use
         return Response.json({
             message: "blog saved successfully",
         }, {
-            status: 200
+            status: 201
         })
     } catch {
         return Response.json({

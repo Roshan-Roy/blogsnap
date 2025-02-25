@@ -3,13 +3,15 @@ import { db } from '@/lib/db'
 import BlogPageProfile from '@/components/blogpage/profile/BlogPageProfile'
 import formatDate from '@/lib/format-date'
 import Image from 'next/image'
-import { FaRegComment, FaRegBookmark } from 'react-icons/fa'
+import BlogCommentButton from '@/components/blogpage/commentbutton/BlogCommentButton'
 import BlogLikeButton from '@/components/blogpage/likebutton/BlogLikeButton'
 import { auth } from '@/auth'
 import BlogSaveButton from '@/components/blogpage/savebutton/BlogSaveButton'
+import { comment } from 'postcss'
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
     const session = await auth()
+    const comments = await db.comment.findMany()
     try {
         const { id } = await params
         const blog = await db.blog.findFirst({
@@ -17,7 +19,14 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 id
             },
             include: {
-                comments: true,
+                comments: {
+                    include: {
+                        User: true
+                    },
+                    orderBy: {
+                        createdAt: "desc"
+                    }
+                },
                 likes: {
                     include: {
                         User: true
@@ -34,11 +43,11 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         return (
             <div className="w-7/12 mx-auto pt-8 pb-16 flex flex-col gap-7">
                 <h1 className="text-6xl leading-snug font-semibold">{blog.title}</h1>
-                <BlogPageProfile name={blog.User?.name as string} image={blog.User?.imageUrl as string} date={formatDate(blog.createdAt)} />
+                <BlogPageProfile id={blog.User?.id as string} name={blog.User?.name as string} image={blog.User?.imageUrl as string} date={formatDate(blog.createdAt)} />
                 <div className="border-y-1 h-14 flex items-center justify-between text-xl px-3 text-gray-600">
-                    <div className="flex gap-5 items-center">
+                    <div className="flex gap-3 items-center">
                         <BlogLikeButton blogId={blog.id} initialLiked={blog.likes.some(e => e.userId === session?.user.id)} likedUsers={blog.likes.map(e => ({ name: e.User?.name as string, id: e.User?.id as string, image: e.User?.imageUrl as string, email: e.User?.email as string }))} />
-                        <FaRegComment />
+                        <BlogCommentButton blogId={blog.id} comments={blog.comments.map(e => ({ id: e.id, userId: e.User?.id as string, name: e.User?.name as string, image: e.User?.imageUrl as string, comment: e.comment, createdAt: formatDate(e.createdAt) }))} />
                     </div>
                     <BlogSaveButton blogId={blog.id} initialSaved={blog.saved.some(e => e.userId === session?.user.id)} />
                 </div>
