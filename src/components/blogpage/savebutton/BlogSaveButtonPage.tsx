@@ -47,7 +47,7 @@ const BlogSaveButton = ({
     setLoading(false)
   }
   return (
-    <div className="border-2 w-10 h-10 rounded-full flex justify-center items-center cursor-pointer" onClick={(e) => {
+    <div className="border-2 w-10 h-10 rounded-full flex justify-center items-center cursor-pointer" onClick={() => {
       if (!loading) handleSaveBtnClick()
     }}>
       {loading ? <Spinner size="sm" color="default" /> : saved ? <FaBookmark /> : <FaRegBookmark />}

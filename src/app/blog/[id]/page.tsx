@@ -6,7 +6,7 @@ import Image from 'next/image'
 import BlogCommentButton from '@/components/blogpage/commentbutton/BlogCommentButton'
 import BlogLikeButton from '@/components/blogpage/likebutton/BlogLikeButton'
 import { auth } from '@/auth'
-import BlogSaveButton from '@/components/blogpage/savebutton/BlogSaveButton'
+import BlogSaveButton from '@/components/blogpage/savebutton/BlogSaveButtonPage'
 import { comment } from 'postcss'
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {

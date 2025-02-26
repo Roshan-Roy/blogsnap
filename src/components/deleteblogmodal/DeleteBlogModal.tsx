@@ -37,11 +37,9 @@ const DeleteBlogModal = ({
             if (!res.ok) {
                 throw new Error()
             }
-            onClose()
             router.refresh()
         } catch {
             setError(true)
-        } finally {
             setLoading(false)
         }
     }

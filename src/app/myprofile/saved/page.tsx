@@ -1,9 +1,10 @@
-import React from 'react'
+import SavedBlogs from "@/components/myprofile/savedblogs/SavedBlogs"
+import { Suspense } from "react"
 
 const page = () => {
-  return (
-    <div>Saved</div>
-  )
+  return <Suspense fallback={<div>Loading</div>}>
+    <SavedBlogs />
+  </Suspense>
 }
 
 export default page
