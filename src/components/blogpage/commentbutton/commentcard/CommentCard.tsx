@@ -55,7 +55,7 @@ const CommentCard = ({
     return (
         <div className="flex gap-4">
             <div className="relative w-12 h-12 overflow-hidden rounded-full shrink-0">
-                <Image src={image} alt="profile picture" fill />
+                <Image src={image ? image : "/user.png"} alt="profile picture" fill />
             </div>
             <div className="flex-1">
                 <div className="flex justify-between">
