@@ -20,7 +20,7 @@ const MyProfile = async () => {
         return (
             <div className="flex w-5/12 mx-auto justify-center gap-12 mt-10">
                 <div className="relative w-56 h-56 rounded-full overflow-hidden bg-gray-100">
-                    <Image fill={true} src={user?.imageUrl ? user.imageUrl : "/user.png"} alt="No profile picture" />
+                    <Image unoptimized={false} fill={true} src={user?.imageUrl ? user.imageUrl : "/user.png"} alt="No profile picture" />
                 </div>
                 <div className="flex-1 flex flex-col gap-5 text-lg">
                     <div className="flex justify-between">

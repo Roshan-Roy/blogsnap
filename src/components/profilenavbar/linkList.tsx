@@ -1,4 +1,4 @@
-import { FiGrid } from "react-icons/fi";
+import { FiGrid } from "react-icons/fi"
 import { FaRegBookmark } from "react-icons/fa"
 
 const links = [

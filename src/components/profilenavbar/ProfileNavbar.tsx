@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link"
 import Links from "./links/Links"
 import links from "./linkList"
 

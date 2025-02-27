@@ -6,12 +6,10 @@ import Image from 'next/image'
 import BlogCommentButton from '@/components/blogpage/commentbutton/BlogCommentButton'
 import BlogLikeButton from '@/components/blogpage/likebutton/BlogLikeButton'
 import { auth } from '@/auth'
-import BlogSaveButton from '@/components/blogpage/savebutton/BlogSaveButtonPage'
-import { comment } from 'postcss'
+import BlogSaveButton from '@/components/savebutton/BlogSaveButtonPage'
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
     const session = await auth()
-    const comments = await db.comment.findMany()
     try {
         const { id } = await params
         const blog = await db.blog.findFirst({

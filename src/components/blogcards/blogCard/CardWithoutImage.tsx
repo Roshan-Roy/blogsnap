@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import formatDate from '@/lib/format-date'
 import { Button, Link } from '@nextui-org/react'
-import BlogSaveButtonCard from '@/components/savebutton/BlogSaveButtonCardProfile'
+import BlogSaveButtonCard from '@/components/savebutton/BlogSaveButtonCard'
 
 interface Card {
     id: string;
@@ -14,6 +14,7 @@ interface Card {
     noOfLikes: number;
     userName: string;
     userImage?: string | null;
+    initialSaved: boolean;
     dateOfCreation: Date;
 }
 
@@ -26,6 +27,7 @@ const CardWithoutImage = ({
     noOfLikes,
     userName,
     userImage,
+    initialSaved,
     dateOfCreation
 }: Card) => {
     return (
@@ -51,7 +53,7 @@ const CardWithoutImage = ({
                                 <p className="text-gray-500">{formatDate(dateOfCreation)}</p>
                             </div>
                         </div>
-                        <BlogSaveButtonCard blogId={id} />
+                        <BlogSaveButtonCard blogId={id} initialSaved={initialSaved}/>
                     </div>
                 </div>
             </div>
