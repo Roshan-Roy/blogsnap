@@ -71,7 +71,7 @@ const CommentCard = ({
                         </span>)
                     }
                 </div>
-                <p className="text-sm pt-1 pb-2">{comment}</p>
+                <p className="text-sm pt-1 pb-2 break-all">{comment}</p>
             </div>
         </div>
     )
