@@ -28,7 +28,7 @@ const BlogPageProfile = ({
                     <p className="text-gray-500">{date}</p>
                 </div>
             </div>
-            <Button as={Link} color="primary" className="bg-gray-800 font-semibold text-xs w-32" disableRipple>
+            <Button as={Link} href={`/profile/${id}`} color="primary" className="bg-gray-800 font-semibold text-xs w-32" disableRipple>
                 View Profile
             </Button>
         </div>

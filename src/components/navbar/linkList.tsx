@@ -3,7 +3,15 @@ import { RiFileList2Line } from "react-icons/ri"
 import { IoMdAddCircleOutline } from "react-icons/io"
 import { FaRegUser } from "react-icons/fa"
 
-const links = [
+export const links = [
+  {
+    id: 1,
+    routes: ["/"],
+    icon: <AiOutlineHome />,
+  }
+]
+
+export const linksLoggedIn = [
   {
     id: 1,
     routes: ["/"],
@@ -25,5 +33,3 @@ const links = [
     icon: <FaRegUser />
   }
 ];
-
-export default links;

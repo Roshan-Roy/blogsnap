@@ -18,4 +18,4 @@ export const adminRoute = "/admin"
 
 //the default redirect path after logging in
 
-export const DEFAULT_LOGIN_REDIRECT = "/test"
+export const DEFAULT_LOGIN_REDIRECT = "/all"

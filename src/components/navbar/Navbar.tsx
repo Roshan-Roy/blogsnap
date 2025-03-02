@@ -1,17 +1,19 @@
 import Links from "./links/Links"
-import links from "./linkList"
+import { links, linksLoggedIn } from "./linkList"
 import { Dancing_Script } from "next/font/google"
+import { auth } from "@/auth"
 
 const dancingScript = Dancing_Script({ subsets: ['latin'] })
 
-const Navbar = () => {
+const Navbar = async () => {
+    const session = await auth()
     return (
         <>
             <div className="fixed h-20 border-b-1 w-full bg-white z-50">
                 <div className="w-9/12 h-full mx-auto flex justify-between items-center">
                     <h2 className={`${dancingScript.className} text-2xl font-black`}>BlogSnap</h2>
                     <div className="flex gap-2">
-                        {links.map(e => <Links key={e.id} icon={e.icon} routes={e.routes} />)}
+                        {session ? linksLoggedIn.map(e => <Links key={e.id} icon={e.icon} routes={e.routes} />) : links.map(e => <Links key={e.id} icon={e.icon} routes={e.routes} />)}
                     </div>
                 </div>
             </div>

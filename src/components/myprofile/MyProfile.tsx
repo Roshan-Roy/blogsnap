@@ -14,9 +14,12 @@ const MyProfile = async () => {
                 id: session?.user.id
             },
             include: {
+                following: true,
+                followers: true,
                 blogs: true
             }
         })
+        console.log(user)
         return (
             <div className="flex w-5/12 mx-auto justify-center gap-12 mt-10">
                 <div className="relative w-56 h-56 rounded-full overflow-hidden bg-gray-100">
@@ -39,8 +42,8 @@ const MyProfile = async () => {
                     <p className="text-gray-600 text-sm">{user?.email}</p>
                     <div className="flex justify-between">
                         <p className="flex-1"><span className="font-bold text-2xl mr-2">{user?.blogs.length}</span>Posts</p>
-                        <p className="flex-1 text-center"><span className="font-bold text-2xl mr-2">0</span>Followers</p>
-                        <p className="flex-1 text-right"><span className="font-bold text-2xl mr-2">0</span>Following</p>
+                        <p className="flex-1 text-center"><span className="font-bold text-2xl mr-2">{user?.followers.length}</span>Followers</p>
+                        <p className="flex-1 text-right"><span className="font-bold text-2xl mr-2">{user?.following.length}</span>Following</p>
                     </div>
                     <p className="leading-8 text-gray-600">{user?.bio}</p>
                     <div className="flex text-2xl gap-5 mt-2">

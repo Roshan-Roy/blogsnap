@@ -8,6 +8,9 @@ import CardWithImage from "@/components/blogcards/blogCard/CardWithImage"
 import CardWithoutImage from "@/components/blogcards/blogCard/CardWithoutImage"
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
+import FollowBtn from "@/components/profile/followbtn/FollowBtn"
+import FollowersModal from "@/components/profile/followersmodal/FollowersModal"
+import FollowingModal from "@/components/profile/followingmodal/FollowingModal"
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params
@@ -19,11 +22,22 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 id
             },
             include: {
+                following: {
+                    include: {
+                        Follows: true
+                    }
+                },
+                followers: {
+                    include: {
+                        FollowedBy: true
+                    }
+                },
                 blogs: {
                     include: {
                         comments: true,
                         likes: true,
-                        saved: true
+                        saved: true,
+
                     },
                     orderBy: {
                         createdAt: "desc"
@@ -31,6 +45,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 }
             }
         })
+        console.log(user)
         if (!user) return <div>User not found</div>
         return (
             <>
@@ -41,13 +56,13 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                     <div className="flex-1 flex flex-col gap-5 text-lg">
                         <div className="flex justify-between">
                             <h1 className="text-3xl font-bold">{user.name}</h1>
-                            One
+                            <FollowBtn id={user.id} initialFollowing={user.followers.some(e => e.followedById === session?.user.id)} />
                         </div>
                         <p className="text-gray-600 text-sm">{user.email}</p>
                         <div className="flex justify-between">
                             <p className="flex-1"><span className="font-bold text-2xl mr-2">{user.blogs.length}</span>Posts</p>
-                            <p className="flex-1 text-center"><span className="font-bold text-2xl mr-2">0</span>Followers</p>
-                            <p className="flex-1 text-right"><span className="font-bold text-2xl mr-2">0</span>Following</p>
+                            <FollowersModal followers={user.followers.map(e => e.FollowedBy)} />
+                            <FollowingModal following={user.following.map(e => e.Follows)} />
                         </div>
                         <p className="leading-8 text-gray-600">{user?.bio}</p>
                         <div className="flex text-2xl gap-5 mt-2">
@@ -99,7 +114,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             </>
         )
     } catch {
-        throw new Error("Something went wrong")
+        throw new Error("Somehing went wrong")
     }
 
 }
