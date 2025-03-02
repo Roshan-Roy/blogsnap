@@ -73,7 +73,7 @@ const BlogCommentButton = ({
                 <FaRegComment />
             </div>
             <span className="text-sm font-semibold p-2 rounded-full cursor-pointer">{comments.length}</span>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={() => setError(false)} scrollBehavior="inside" radius="sm" isKeyboardDismissDisabled={loading || deleteLoading} isDismissable={!loading && !deleteLoading} hideCloseButton={loading || deleteLoading}>
+            <Modal size="lg" isOpen={isOpen} onOpenChange={onOpenChange} onClose={() => setError(false)} scrollBehavior="inside" radius="sm" isKeyboardDismissDisabled={loading || deleteLoading} isDismissable={!loading && !deleteLoading} hideCloseButton={loading || deleteLoading}>
                 <ModalContent className="pb-4">
                     <ModalHeader className="justify-center border-b-1">{comments.length} {comments.length <= 1 ? "Comment" : "Comments"}</ModalHeader>
                     <div className="flex flex-col sticky top-0 z-50 bg-white py-4 px-5 gap-4">

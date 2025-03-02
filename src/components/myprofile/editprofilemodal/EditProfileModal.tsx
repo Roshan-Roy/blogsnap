@@ -132,7 +132,7 @@ export default function EditProfileModal({
   return (
     <>
       <Button onPress={onOpen} size="sm" className="w-32 font-semibold bg-gray-800 text-white" disableRipple>Edit Profile</Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} onClose={handleModalClose} scrollBehavior="inside" isKeyboardDismissDisabled={loading || loadingDelete} isDismissable={!loading && !loadingDelete} hideCloseButton={loading || loadingDelete}>
+      <Modal size="lg" isOpen={isOpen} onOpenChange={onOpenChange} onClose={handleModalClose} scrollBehavior="inside" isKeyboardDismissDisabled={loading || loadingDelete} isDismissable={!loading && !loadingDelete} hideCloseButton={loading || loadingDelete}>
         <Form validationBehavior="native" onSubmit={(e) => {
           e.preventDefault()
           const data = Object.fromEntries(new FormData(e.currentTarget))
