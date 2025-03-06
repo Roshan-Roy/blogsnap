@@ -1,9 +1,9 @@
 "use client"
 
 import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from "@nextui-org/react"
-import FollowingCard from "./followingcard/FollowingCard"
+import FollowingCardMyProfile from "./followingcardmyprofile/FollowingCardMyProfile"
 
-const FollowingModal = ({
+const FollowingModalMyProfile = ({
     following
 }: {
     following: any;
@@ -12,12 +12,12 @@ const FollowingModal = ({
     return (
         <>
             <p className="flex-1 text-center cursor-pointer" onClick={onOpen}><span className="font-bold text-2xl mr-2">{following.length}</span>Following</p>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior="inside" radius="sm">
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior="inside" radius="sm" size="2xl">
                 <ModalContent className="pb-4">
                     <ModalHeader className="justify-center border-b-1">{following.length} Following</ModalHeader>
                     <ModalBody className="scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">
                         <div className="h-[420px]">
-                            {following.map((e: any) => <FollowingCard key={e.id} id={e.id} name={e.name} imageUrl={e.imageUrl} email={e.email} />)}
+                            {following.map((e: any) => <FollowingCardMyProfile key={e.id} id={e.id} userId={e.Follows.id} name={e.Follows.name} imageUrl={e.Follows.imageUrl} email={e.Follows.email} />)}
                         </div>
                     </ModalBody>
                 </ModalContent>
@@ -26,4 +26,4 @@ const FollowingModal = ({
     )
 }
 
-export default FollowingModal
+export default FollowingModalMyProfile

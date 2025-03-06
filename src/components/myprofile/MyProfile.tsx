@@ -5,6 +5,7 @@ import { FaXTwitter } from "react-icons/fa6"
 import EditProfileModal from "./editprofilemodal/EditProfileModal"
 import { db } from "@/lib/db"
 import { auth } from "@/auth"
+import FollowingModalMyProfile from "../profile/followingmodalmyprofile/FollowingModalMyProfile"
 
 const MyProfile = async () => {
     const session = await auth()
@@ -14,12 +15,16 @@ const MyProfile = async () => {
                 id: session?.user.id
             },
             include: {
-                following: true,
+                following: {
+                    include: {
+                        Follows: true
+                    }
+                },
                 followers: true,
                 blogs: true
             }
         })
-        console.log(user)
+        console.log(user?.following)
         return (
             <div className="flex w-5/12 mx-auto justify-center gap-12 mt-10">
                 <div className="relative w-56 h-56 rounded-full overflow-hidden bg-gray-100">
@@ -43,7 +48,7 @@ const MyProfile = async () => {
                     <div className="flex justify-between">
                         <p className="flex-1"><span className="font-bold text-2xl mr-2">{user?.blogs.length}</span>Posts</p>
                         <p className="flex-1 text-center"><span className="font-bold text-2xl mr-2">{user?.followers.length}</span>Followers</p>
-                        <p className="flex-1 text-right"><span className="font-bold text-2xl mr-2">{user?.following.length}</span>Following</p>
+                        <FollowingModalMyProfile following={user?.following} />
                     </div>
                     <p className="leading-8 text-gray-600">{user?.bio}</p>
                     <div className="flex text-2xl gap-5 mt-2">
