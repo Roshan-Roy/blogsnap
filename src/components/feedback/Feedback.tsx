@@ -30,8 +30,8 @@ const Feedback = () => {
                             const res = await fetch(`/api/feedback/${session?.user.id}`, {
                                 method: "POST",
                                 body: JSON.stringify({
-                                    title: values.title,
-                                    message: values.message
+                                    title: values.title.trim(),
+                                    message: values.message.trim()
                                 })
                             })
                             if (!res.ok) throw new Error()
