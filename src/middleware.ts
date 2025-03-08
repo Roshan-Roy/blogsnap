@@ -30,7 +30,7 @@ export default auth(async (req) => {
         }
         return Response.redirect(new URL("/", nextUrl))
     }
-    if (nextUrl.pathname === adminRoute && !isAdmin) {
+    if (nextUrl.pathname.startsWith(adminRoute) && !isAdmin) {
         return Response.redirect(new URL("/", nextUrl))
     }
 })

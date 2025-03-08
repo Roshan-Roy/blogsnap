@@ -1,10 +1,10 @@
-import NextUiProvider from "./NextUiProvider";
-import type { Metadata } from "next";
-import "./globals.css";
-import { SessionProvider } from "next-auth/react";
-import { auth } from "@/auth";
-import Navbar from "@/components/navbar/Navbar";
-import { Raleway } from "next/font/google";
+import NextUiProvider from "./NextUiProvider"
+import type { Metadata } from "next"
+import "./globals.css"
+import { SessionProvider } from "next-auth/react"
+import { auth } from "@/auth"
+import Navbar from "@/components/navbar/Navbar"
+import { Raleway } from "next/font/google"
 
 const raleway = Raleway({ subsets: ['latin'] })
 

@@ -2,6 +2,7 @@ import GoogleSigninBtn from "@/components/google/GoogleSigninBtn"
 import { auth } from "@/auth"
 import LogOutBtn from "@/components/logout/LogoutBtn"
 import { CSSProperties } from "react"
+import Feedback from "@/components/feedback/Feedback"
 
 const textStyle: CSSProperties = {
   position: "absolute",
@@ -41,6 +42,7 @@ const Home = async () => {
       <div className="h-[100px] flex items-center justify-center">
         {session ? <LogOutBtn /> : <GoogleSigninBtn />}
       </div>
+      {session && <Feedback />}
     </>
   )
 }

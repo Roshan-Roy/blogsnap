@@ -2,6 +2,7 @@ import Links from "./links/Links"
 import { links, linksLoggedIn } from "./linkList"
 import { Dancing_Script } from "next/font/google"
 import { auth } from "@/auth"
+import { MdOutlineAdminPanelSettings } from "react-icons/md"
 
 const dancingScript = Dancing_Script({ subsets: ['latin'] })
 
@@ -14,6 +15,7 @@ const Navbar = async () => {
                     <h2 className={`${dancingScript.className} text-2xl font-black`}>BlogSnap</h2>
                     <div className="flex gap-2">
                         {session ? linksLoggedIn.map(e => <Links key={e.id} icon={e.icon} routes={e.routes} />) : links.map(e => <Links key={e.id} icon={e.icon} routes={e.routes} />)}
+                        {session?.user.isAdmin && <Links icon={<MdOutlineAdminPanelSettings />} routes={["/admin"]} />}
                     </div>
                 </div>
             </div>
