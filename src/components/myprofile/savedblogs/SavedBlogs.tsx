@@ -25,6 +25,7 @@ const SavedBlogs = async () => {
                 {savedBlogs.map(e => {
                     if (e.Blog?.imageUrl) return <CardWithImage
                         id={e.Blog.id}
+                        userId={e.Blog.User?.id as string}
                         title={e.Blog.title}
                         content={e.Blog.content}
                         topic={e.Blog.topic}
@@ -38,6 +39,7 @@ const SavedBlogs = async () => {
                     if (e.Blog)
                         return <CardWithoutImage
                             id={e.Blog.id}
+                            userId={e.Blog.User?.id as string}
                             title={e.Blog.title}
                             content={e.Blog.content}
                             topic={e.Blog.topic}

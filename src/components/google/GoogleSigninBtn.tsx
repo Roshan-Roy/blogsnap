@@ -17,7 +17,7 @@ const GoogleSigninBtn = () => {
     }
     return (
         <Button
-            className="bg-white gap-5"
+            className="bg-gray-800 gap-5 text-white pl-3 pr-8"
             radius="full"
             isLoading={clicked}
             startContent={!clicked && <FcGoogle className="text-3xl" />}

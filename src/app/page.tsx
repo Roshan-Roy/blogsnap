@@ -35,10 +35,10 @@ const Home = async () => {
   const session = await auth()
   return (
     <>
-      <div className="h-[calc(100dvh-160px)] bg-gray-200 relative">
+      <div className="h-[calc(100dvh-180px)] bg-gray-200 relative">
         <h1 style={textStyle} className="text-center">BLOGSNAP</h1>
       </div>
-      <div className="h-[80px]">
+      <div className="h-[100px] flex items-center justify-center">
         {session ? <LogOutBtn /> : <GoogleSigninBtn />}
       </div>
     </>

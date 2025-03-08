@@ -6,6 +6,7 @@ import EditProfileModal from "./editprofilemodal/EditProfileModal"
 import { db } from "@/lib/db"
 import { auth } from "@/auth"
 import FollowingModalMyProfile from "../profile/followingmodalmyprofile/FollowingModalMyProfile"
+import FollowersModalMyProfile from "../profile/followersmodalmyprofile/FollowersModalMyProfile"
 
 const MyProfile = async () => {
     const session = await auth()
@@ -20,7 +21,11 @@ const MyProfile = async () => {
                         Follows: true
                     }
                 },
-                followers: true,
+                followers: {
+                    include: {
+                        FollowedBy: true
+                    }
+                },
                 blogs: true
             }
         })
@@ -47,7 +52,7 @@ const MyProfile = async () => {
                     <p className="text-gray-600 text-sm">{user?.email}</p>
                     <div className="flex justify-between">
                         <p className="flex-1"><span className="font-bold text-2xl mr-2">{user?.blogs.length}</span>Posts</p>
-                        <p className="flex-1 text-center"><span className="font-bold text-2xl mr-2">{user?.followers.length}</span>Followers</p>
+                        <FollowersModalMyProfile followers={user?.followers} />
                         <FollowingModalMyProfile following={user?.following} />
                     </div>
                     <p className="leading-8 text-gray-600">{user?.bio}</p>

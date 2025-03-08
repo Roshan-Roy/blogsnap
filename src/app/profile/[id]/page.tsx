@@ -85,6 +85,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                     {user.blogs.map(e => {
                         if (e.imageUrl) return <CardWithImage
                             id={e.id}
+                            userId={id}
                             title={e.title}
                             content={e.content}
                             topic={e.topic}
@@ -98,6 +99,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                             key={e.id} />
                         return <CardWithoutImage
                             id={e.id}
+                            userId={id}
                             title={e.title}
                             content={e.content}
                             topic={e.topic}

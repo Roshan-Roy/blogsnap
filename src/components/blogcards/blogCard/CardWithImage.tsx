@@ -7,6 +7,7 @@ import BlogSaveButtonCard from '@/components/savebutton/BlogSaveButtonCard'
 
 interface Card {
     id: string;
+    userId: string;
     title: string;
     content: string;
     topic: string;
@@ -21,6 +22,7 @@ interface Card {
 
 const CardWithImage = ({
     id,
+    userId,
     title,
     content,
     topic,
@@ -50,9 +52,9 @@ const CardWithImage = ({
                         <div className="relative h-10 w-10 rounded-full overflow-hidden">
                             <Image src={userImage ? userImage : "/user.png"} alt="profile picture" fill />
                         </div>
-                        <div className="flex flex-col font-semibold text-xs">
-                            <p>{userName}</p>
-                            <p className="text-gray-500">{formatDate(dateOfCreation)}</p>
+                        <div className="flex flex-col font-semibold">
+                            <Link href={`/profile/${userId}`} className="text-xs text-gray-800">{userName}</Link>
+                            <p className="text-gray-500 text-xs">{formatDate(dateOfCreation)}</p>
                         </div>
                     </div>
                     <BlogSaveButtonCard blogId={id} initialSaved={initialSaved} />
