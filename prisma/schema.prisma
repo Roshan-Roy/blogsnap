@@ -42,6 +42,8 @@ model Follow {
 
   Follows   User?   @relation(name: "followedBy", fields: [followsId], references: [id])
   followsId String? @db.ObjectId
+
+  createdAt DateTime @default(now())
 }
 
 model Blog {

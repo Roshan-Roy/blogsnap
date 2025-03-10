@@ -17,11 +17,17 @@ const MyProfile = async () => {
             },
             include: {
                 following: {
+                    orderBy: {
+                        createdAt: "desc"
+                    },
                     include: {
                         Follows: true
                     }
                 },
                 followers: {
+                    orderBy: {
+                        createdAt: "desc"
+                    },
                     include: {
                         FollowedBy: true
                     }

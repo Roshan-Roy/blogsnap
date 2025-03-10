@@ -23,11 +23,17 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             },
             include: {
                 following: {
+                    orderBy: {
+                        createdAt: "desc"
+                    },
                     include: {
                         Follows: true
                     }
                 },
                 followers: {
+                    orderBy: {
+                        createdAt: "desc"
+                    },
                     include: {
                         FollowedBy: true
                     }
