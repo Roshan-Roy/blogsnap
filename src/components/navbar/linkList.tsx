@@ -24,7 +24,7 @@ export const linksLoggedIn = [
   },
   {
     id: 3,
-    routes: ["/all"],
+    routes: ["/all/allblogs", "/all/following"],
     icon: <RiFileList2Line />
   },
   {

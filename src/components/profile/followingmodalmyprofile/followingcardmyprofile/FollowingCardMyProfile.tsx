@@ -1,6 +1,6 @@
 import { Button, Link } from "@nextui-org/react"
 import Image from "next/image"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Spinner } from "@nextui-org/react"
 import { useRouter } from "next/navigation"
 
@@ -10,6 +10,9 @@ interface Following {
     name: string;
     email: string;
     imageUrl: string;
+    loadingModal: boolean;
+    enableLoading: () => void;
+    disableLoading: () => void;
 }
 
 const FollowingCardMyProfile = ({
@@ -17,18 +20,30 @@ const FollowingCardMyProfile = ({
     userId,
     name,
     email,
-    imageUrl
+    imageUrl,
+    loadingModal,
+    enableLoading,
+    disableLoading,
 }: Following) => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
-    const handleDeleteBtnClick = async () => {
+    const handleUnfollowBtnClick = async () => {
         setLoading(true)
+        enableLoading()
         const res = await fetch(`/api/deletefollow/${id}`, {
             method: 'DELETE'
         })
-        if (!res.ok) setLoading(false)
+        if (!res.ok) {
+            setLoading(false)
+            disableLoading()
+        }
         else router.refresh()
     }
+    useEffect(() => {
+        return () => {
+            disableLoading()
+        }
+    },[])
     return (
         <div className="flex justify-between items-center h-[70px]">
             <div className="flex gap-4 items-center">
@@ -41,7 +56,9 @@ const FollowingCardMyProfile = ({
                 </div>
             </div>
             <div className="flex gap-1">
-                <Button onPress={handleDeleteBtnClick} variant="bordered" className="font-semibold text-xs w-32 border-gray-800" disableRipple>
+                <Button onPress={() => {
+                    if (!loadingModal) handleUnfollowBtnClick()
+                }} variant="bordered" className="font-semibold text-xs w-32 border-gray-800" disableRipple>
                     {loading ? <Spinner size="sm" color="default" /> : "unFollow"}
                 </Button>
                 <Button as={Link} href={`/profile/${userId}`} color="primary" className="bg-gray-800 font-semibold text-xs w-32" disableRipple>

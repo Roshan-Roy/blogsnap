@@ -29,7 +29,6 @@ const MyProfile = async () => {
                 blogs: true
             }
         })
-        console.log(user?.following)
         return (
             <div className="flex w-5/12 mx-auto justify-center gap-12 mt-10">
                 <div className="relative w-56 h-56 rounded-full overflow-hidden bg-gray-100">

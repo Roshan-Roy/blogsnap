@@ -63,7 +63,6 @@ const BlogLikeButton = ({
         }
         setLoading(false)
     }
-    console.log(likedUsers)
     return (
         <div className="flex items-center">
             <div className="border-2 w-10 h-10 rounded-full flex justify-center items-center cursor-pointer" onClick={(e) => {
@@ -72,7 +71,7 @@ const BlogLikeButton = ({
                 {loading ? <Spinner size="sm" color="default" /> : liked ? <FaHeart className="text-red-600" /> : <FaRegHeart />}
             </div>
             <span onClick={onOpen} className="text-sm font-semibold p-2 rounded-full cursor-pointer">{likedUsers.length}</span>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior="inside" radius="sm">
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior="inside" radius="sm" size="lg">
                 <ModalContent className="pb-4">
                     <ModalHeader className="justify-center border-b-1">{likedUsers.length} {likedUsers.length <= 1 ? "Like" : "Likes"}</ModalHeader>
                     <ModalBody className="scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">

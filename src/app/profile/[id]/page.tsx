@@ -45,7 +45,6 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 }
             }
         })
-        console.log(user)
         if (!user) return <div>User not found</div>
         return (
             <>

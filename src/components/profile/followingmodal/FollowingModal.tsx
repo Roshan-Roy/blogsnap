@@ -12,7 +12,7 @@ const FollowingModal = ({
     return (
         <>
             <p className="flex-1 text-center cursor-pointer" onClick={onOpen}><span className="font-bold text-2xl mr-2">{following.length}</span>Following</p>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior="inside" radius="sm">
+            <Modal isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior="inside" radius="sm" size="lg">
                 <ModalContent className="pb-4">
                     <ModalHeader className="justify-center border-b-1">{following.length} Following</ModalHeader>
                     <ModalBody className="scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">

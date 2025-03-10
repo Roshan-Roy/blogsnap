@@ -13,7 +13,6 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ u
         })
         if (blog?.publicId) {
             const deleteResult = await cloudinary.uploader.destroy(blog.publicId)
-            console.log(deleteResult)
             if (deleteResult.result !== "ok") {
                 throw new Error()
             }

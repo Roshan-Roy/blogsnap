@@ -15,7 +15,7 @@ const LogOutBtn = () => {
     }
     return (
         <div className="flex gap-2">
-            <Button href="/all" as={Link} size="lg" disableRipple radius="full" className="w-44 bg-gray-800 text-white">All blogs</Button>
+            <Button href="/all/allblogs" as={Link} size="lg" disableRipple radius="full" className="w-44 bg-gray-800 text-white">All blogs</Button>
             <Button
                 className="gap-4 w-44 bg-gray-800 text-white"
                 isLoading={clicked}
