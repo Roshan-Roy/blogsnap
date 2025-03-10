@@ -40,7 +40,9 @@ const FollowersCardMyProfile = ({
         else router.refresh()
     }
     useEffect(() => {
-        disableLoading()
+        return () => {
+            disableLoading()
+        }
     }, [])
     return (
         <div className="flex justify-between items-center h-[70px]">

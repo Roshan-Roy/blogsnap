@@ -18,6 +18,7 @@ import { MdDeleteOutline } from "react-icons/md"
 import { IoCloseSharp } from "react-icons/io5"
 import ModalErrorCard from "@/components/modalerrorcards/ModalErrorCardOne"
 import Image from "next/image"
+import toast from "react-hot-toast"
 
 interface User {
   id: string;
@@ -103,6 +104,7 @@ export default function EditProfileModal({
       setValues({ name, bio, twitter, facebook, instagram, linkedIn })
       handleClearImageSelection()
       onClose()
+      toast("Profile updated successfully")
       router.refresh()
     } catch {
       setError(true)

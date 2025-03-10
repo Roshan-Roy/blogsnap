@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react"
 import { auth } from "@/auth"
 import Navbar from "@/components/navbar/Navbar"
 import { Raleway } from "next/font/google"
+import { Toaster } from "react-hot-toast"
 
 const raleway = Raleway({ subsets: ['latin'] })
 
@@ -29,6 +30,13 @@ export default async function RootLayout({
             <Navbar />
             {children}
           </NextUiProvider>
+          <Toaster position="bottom-right" toastOptions={{
+            style: {
+              background:"#1f2937",
+              color:"white",
+              padding:"15px 50px"
+            },
+          }} />
         </body>
       </html>
     </SessionProvider>

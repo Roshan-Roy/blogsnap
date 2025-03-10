@@ -16,6 +16,7 @@ import {
 import { useState, KeyboardEvent } from "react"
 import ModalErrorCard from "@/components/modalerrorcards/ModalErrorCardOne"
 import { MdModeEditOutline } from "react-icons/md"
+import toast from "react-hot-toast"
 
 
 export default function EditBlogModal({ id, title, content }: {
@@ -63,6 +64,7 @@ export default function EditBlogModal({ id, title, content }: {
                 throw new Error()
             const { data: { title, content } } = await res.json()
             setValues({ title, content })
+            toast("Blog edited successfully")
             onClose()
             router.refresh()
         } catch {

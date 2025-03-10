@@ -20,6 +20,7 @@ import {
 import { useState, useRef, KeyboardEvent, useEffect } from "react"
 import ModalErrorCard from "@/components/modalerrorcards/ModalErrorCardOne"
 import Image from "next/image"
+import toast from "react-hot-toast"
 
 interface Topic {
     id: string;
@@ -84,6 +85,7 @@ export default function CreateBlogModal({ icon }: {
                 throw new Error()
             handleClearImageSelection()
             onClose()
+            toast("Blog created successfully")
             router.refresh()
         } catch {
             setError(true)

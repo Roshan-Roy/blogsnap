@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react"
 import { Form, Input, Button, Textarea, Spinner } from "@nextui-org/react"
 import { useState } from "react"
 import ModalErrorCardFour from "../modalerrorcards/ModalErrorCardFour"
+import toast from "react-hot-toast"
 
 const Feedback = () => {
     const { data: session } = useSession()
@@ -36,6 +37,7 @@ const Feedback = () => {
                             })
                             if (!res.ok) throw new Error()
                             setValues({ title: "", message: "" })
+                            toast("Feedback sent successfully")
                         } catch {
                             setError(true)
                         } finally {
