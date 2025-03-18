@@ -12,10 +12,6 @@ export const apiAuthPrefix = "/api/auth"
 
 export const apiRoutePrefix = "/api"
 
-//feedback page
-
-export const feedbackRoute = "/feedbacks"
-
 //the default redirect path after logging in
 
 export const DEFAULT_LOGIN_REDIRECT = "/all/allblogs"

@@ -1,7 +1,12 @@
 import { db } from "@/lib/db"
 import FeedbackCard from "@/components/feedbackCard/FeedbackCard"
+import { auth } from "@/auth"
+import { redirect } from "next/navigation"
 
 const page = async () => {
+  const session = await auth()
+  const isAdmin = session?.user.isAdmin
+  if (!isAdmin) redirect("/")
   try {
     const feedbacks = await db.feedback.findMany({
       include: {
