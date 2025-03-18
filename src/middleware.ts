@@ -31,7 +31,10 @@ export default auth(async (req) => {
         return Response.redirect(new URL("/", nextUrl))
     }
     if (nextUrl.pathname.startsWith(feedbackRoute) && !isAdmin) {
-        return Response.redirect(new URL("/", nextUrl))
+        return Response.json({
+            admin: isAdmin,
+            x: nextUrl.pathname.startsWith(feedbackRoute)
+        })
     }
 })
 
