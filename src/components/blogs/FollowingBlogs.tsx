@@ -5,6 +5,8 @@ import CardWithImage from "@/components/blogcards/blogCard/CardWithImage"
 import CardWithoutImage from "@/components/blogcards/blogCard/CardWithoutImage"
 import { useSession } from "next-auth/react"
 import { Input, Button, Link } from "@nextui-org/react"
+import PageLoader from "../pageLoader/PageLoader"
+import NoResults from "../noResults/NoResults"
 
 const FollowingBlogs = () => {
     const { data: session } = useSession()
@@ -47,46 +49,48 @@ const FollowingBlogs = () => {
                 </div>
             </div>
             <div>
-                {loading ? <p>Loading</p> : error ? <div>
-                    <p>Something went wrong</p>
-                    <Button onPress={() => {
-                        setLoading(true)
-                        setError(false)
-                        fetchFollowingBlogs()
-                    }}>Try Again</Button>
-                </div> : <div className="w-7/12 mx-auto grid grid-cols-3 gap-4 mb-20 mt-5">
-                    {filteredBlogs.map(e => {
-                        if (e.imageUrl) return <CardWithImage
-                            id={e.id}
-                            userId={e.User.id}
-                            title={e.title}
-                            content={e.content}
-                            topic={e.topic}
-                            imageUrl={e.imageUrl}
-                            noOfLikes={e.likes.length}
-                            noOfComments={e.comments.length}
-                            userName={e.User.name}
-                            userImage={e.User.imageUrl}
-                            initialSaved={e.saved.some((e: any) => e.userId === session?.user.id)}
-                            dateOfCreation={new Date(e.createdAt)}
-                            key={e.id} />
-                        return <CardWithoutImage
-                            id={e.id}
-                            userId={e.User.id}
-                            title={e.title}
-                            content={e.content}
-                            topic={e.topic}
-                            noOfLikes={e.likes.length}
-                            noOfComments={e.comments.length}
-                            userName={e.User.name}
-                            userImage={e.User.imageUrl}
-                            initialSaved={e.saved.some((e: any) => e.userId === session?.user.id)}
-                            dateOfCreation={new Date(e.createdAt)}
-                            key={e.id}
-                        />
-                    })}
-                    {filteredBlogs.length === 0 && <p>No results</p>}
-                </div>}
+                {loading ? <PageLoader />
+                    : error ? <div>
+                        <p>Something went wrong</p>
+                        <Button onPress={() => {
+                            setLoading(true)
+                            setError(false)
+                            fetchFollowingBlogs()
+                        }}>Try Again</Button>
+                    </div>
+                        : filteredBlogs.length === 0 ? <NoResults />
+                            : <div className="w-7/12 mx-auto grid grid-cols-3 gap-4 mb-20 mt-5">
+                                {filteredBlogs.map(e => {
+                                    if (e.imageUrl) return <CardWithImage
+                                        id={e.id}
+                                        userId={e.User.id}
+                                        title={e.title}
+                                        content={e.content}
+                                        topic={e.topic}
+                                        imageUrl={e.imageUrl}
+                                        noOfLikes={e.likes.length}
+                                        noOfComments={e.comments.length}
+                                        userName={e.User.name}
+                                        userImage={e.User.imageUrl}
+                                        initialSaved={e.saved.some((e: any) => e.userId === session?.user.id)}
+                                        dateOfCreation={new Date(e.createdAt)}
+                                        key={e.id} />
+                                    return <CardWithoutImage
+                                        id={e.id}
+                                        userId={e.User.id}
+                                        title={e.title}
+                                        content={e.content}
+                                        topic={e.topic}
+                                        noOfLikes={e.likes.length}
+                                        noOfComments={e.comments.length}
+                                        userName={e.User.name}
+                                        userImage={e.User.imageUrl}
+                                        initialSaved={e.saved.some((e: any) => e.userId === session?.user.id)}
+                                        dateOfCreation={new Date(e.createdAt)}
+                                        key={e.id}
+                                    />
+                                })}
+                            </div>}
             </div>
         </div>
     )
