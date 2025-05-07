@@ -5,6 +5,7 @@ import { Input, Button, Link } from "@nextui-org/react"
 import UserCard from "../usercard/UserCard"
 import PageLoader from "../pageLoader/PageLoader"
 import NoResults from "../noResults/NoResults"
+import ErrorCard from "../errorcard/ErrorCard"
 
 const AllUsers = () => {
     const [users, setUsers] = useState<any[]>([])
@@ -24,6 +25,13 @@ const AllUsers = () => {
             setLoading(false)
         }
     }
+
+    const handleRetry = () => {
+        setLoading(true)
+        setError(false)
+        fetchAllUsers()
+    }
+
     useEffect(() => {
         fetchAllUsers()
     }, [])
@@ -47,14 +55,7 @@ const AllUsers = () => {
             </div>
             <div>
                 {loading ? <PageLoader />
-                    : error ? <div>
-                        <p>Something went wrong</p>
-                        <Button onPress={() => {
-                            setLoading(true)
-                            setError(false)
-                            fetchAllUsers()
-                        }}>Try Again</Button>
-                    </div>
+                    : error ? <ErrorCard retryFn={handleRetry} />
                         : filteredUsers.length === 0 ? <NoResults />
                             : <div className="w-7/12 mx-auto flex flex-col gap-4 mb-20 mt-5">
                                 {filteredUsers.map(e => <UserCard key={e.id} {...e} />)}

@@ -17,6 +17,7 @@ const FollowersModal = ({
                     <ModalHeader className="justify-center border-b-1">{followers.length} {followers.length <= 1 ? "Follower" : "Followers"}</ModalHeader>
                     <ModalBody className="scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">
                         <div className="h-[420px]">
+                            {followers.length === 0 && <div className="h-[370px] flex justify-center items-center text-lg"><span>No followers</span></div>}
                             {followers.map((e: any) => <FollowerCard key={e.id} id={e.id} name={e.name} imageUrl={e.imageUrl} email={e.email} />)}
                         </div>
                     </ModalBody>

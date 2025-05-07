@@ -17,6 +17,7 @@ const FollowingModal = ({
                     <ModalHeader className="justify-center border-b-1">{following.length} Following</ModalHeader>
                     <ModalBody className="scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">
                         <div className="h-[420px]">
+                            {following.length === 0 && <div className="h-[370px] flex justify-center items-center text-lg"><span>No following</span></div>}
                             {following.map((e: any) => <FollowingCard key={e.id} id={e.id} name={e.name} imageUrl={e.imageUrl} email={e.email} />)}
                         </div>
                     </ModalBody>

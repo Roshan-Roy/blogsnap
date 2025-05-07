@@ -76,6 +76,7 @@ const BlogLikeButton = ({
                     <ModalHeader className="justify-center border-b-1">{likedUsers.length} {likedUsers.length <= 1 ? "Like" : "Likes"}</ModalHeader>
                     <ModalBody className="scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">
                         <div className="h-[420px]">
+                            {likedUsers.length === 0 && <div className="h-[370px] flex justify-center items-center text-lg"><span>No likes</span></div>}
                             {likedUsers.map(e => <LikedUsersCard key={e.id} {...e} />)}
                         </div>
                     </ModalBody>

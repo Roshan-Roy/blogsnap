@@ -25,6 +25,7 @@ const FollowersModalMyProfile = ({
                     <ModalHeader className="justify-center border-b-1">{followers.length} Followers</ModalHeader>
                     <ModalBody className="scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full">
                         <div className="h-[420px]">
+                            {followers.length === 0 && <div className="h-[370px] flex justify-center items-center text-lg"><span>No followers</span></div>}
                             {followers.map((e: any) => <FollowersCardMyProfile key={e.id} enableLoading={handleEnableLoading} disableLoading={handleDisableLoading} loadingModal={loading} id={e.id} userId={e.FollowedBy.id} name={e.FollowedBy.name} imageUrl={e.FollowedBy.imageUrl} email={e.FollowedBy.email} />)}
                         </div>
                     </ModalBody>

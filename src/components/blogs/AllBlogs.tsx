@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react"
 import { Input, Button, Link } from "@nextui-org/react"
 import PageLoader from "../pageLoader/PageLoader"
 import NoResults from "../noResults/NoResults"
+import ErrorCard from "../errorcard/ErrorCard"
 
 const AllBlogs = () => {
     const { data: session } = useSession()
@@ -27,6 +28,13 @@ const AllBlogs = () => {
             setLoading(false)
         }
     }
+
+    const handleRetry = () => {
+        setLoading(true)
+        setError(false)
+        fetchAllBlogs()
+    }
+
     useEffect(() => {
         fetchAllBlogs()
     }, [])
@@ -50,13 +58,7 @@ const AllBlogs = () => {
             </div>
             <div>
                 {loading ? <PageLoader />
-                    : error ? <div>
-                        <p>Something went wrong</p>
-                        <Button onPress={() => {
-                            setLoading(true)
-                            setError(false)
-                            fetchAllBlogs()
-                        }}>Try Again</Button></div>
+                    : error ? <ErrorCard retryFn={handleRetry} />
                         : filteredBlogs.length === 0 ? <NoResults />
                             : <div className="w-7/12 mx-auto grid grid-cols-3 gap-4 mb-20 mt-5">
                                 {filteredBlogs.map(e => {

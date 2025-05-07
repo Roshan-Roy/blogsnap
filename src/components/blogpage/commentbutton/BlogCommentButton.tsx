@@ -92,7 +92,8 @@ const BlogCommentButton = ({
                         {error && <ModalErrorCardThree closeFn={() => setError(false)} />}
                     </div>
                     <ModalBody className="scrollbar-thin scrollbar-thumb-gray-200 scrollbar-thumb-rounded-full px-7">
-                        <div className="min-h-[300px] flex flex-col gap-4">
+                        <div className="h-[300px] flex flex-col gap-4">
+                            {comments.length === 0 && <div className="h-[250px] flex justify-center items-center text-lg"><span>No comments</span></div>}
                             {comments.map(e => <CommentCard
                                 key={e.id}
                                 activateError={activateError}
