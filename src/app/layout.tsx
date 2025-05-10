@@ -12,9 +12,8 @@ const raleway = Raleway({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: "Blogsnap",
-  description: "Share your blogs with blogsnap",
+  description: "Share your blogs with blogsnap"
 };
-
 
 export default async function RootLayout({
   children,
