@@ -51,7 +51,9 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 }
             }
         })
-        if (!user) return <div>User not found</div>
+        if (!user) return <div className="flex h-[calc(100dvh-80px)] justify-center items-center text-xl">
+            <span>User not found</span>
+        </div>
         return (
             <>
                 <div className="flex w-5/12 mx-auto justify-center gap-12 mt-10">

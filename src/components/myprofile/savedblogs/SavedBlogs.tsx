@@ -20,6 +20,9 @@ const SavedBlogs = async () => {
                 }
             }
         })
+        if (savedBlogs.length === 0) return <div className="flex h-52 justify-center items-center text-xl text-gray-400">
+            <span>No saved blogs</span>
+        </div>
         return (
             <div className="w-7/12 mx-auto grid grid-cols-3 gap-4 mb-20">
                 {savedBlogs.map(e => {

@@ -1,7 +1,7 @@
 import MyProfile from "@/components/myprofile/MyProfile"
 import ProfileNavbar from "@/components/profilenavbar/ProfileNavbar"
 import { Suspense } from "react"
-import ProfileSuspense from "@/components/suspenses/ProfileSuspense"
+import ProfileSuspense from "@/components/profilesuspense/ProfileSuspense"
 
 const layout = ({
     children,

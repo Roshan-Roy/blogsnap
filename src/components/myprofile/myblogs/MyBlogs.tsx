@@ -19,6 +19,9 @@ const MyBlogs = async () => {
                 createdAt: "desc"
             }
         })
+        if (myBlogs.length === 0) return <div className="flex h-52 justify-center items-center text-xl text-gray-400">
+            <span>No blogs yet</span>
+        </div>
         return (
             <div className="w-7/12 mx-auto grid grid-cols-3 gap-4 mb-20">
                 {myBlogs.map(e => {

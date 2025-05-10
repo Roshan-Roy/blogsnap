@@ -37,7 +37,9 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                 User: true
             }
         })
-        if (!blog) return <p>Blog Not found</p>
+        if (!blog) return <div className="flex h-[calc(100dvh-80px)] justify-center items-center text-xl">
+            <span>Blog not found</span>
+        </div>
         return (
             <div className="w-7/12 mx-auto pt-8 pb-16 flex flex-col gap-7">
                 <h1 className="text-6xl leading-snug font-semibold">{blog.title}</h1>
