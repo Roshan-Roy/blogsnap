@@ -88,38 +88,41 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
                     </div>
                     <div className="flex-1 border-t-2"></div>
                 </div>
-                <div className="w-7/12 mx-auto grid grid-cols-3 gap-4 mb-20">
-                    {user.blogs.map(e => {
-                        if (e.imageUrl) return <CardWithImage
-                            id={e.id}
-                            userId={id}
-                            title={e.title}
-                            content={e.content}
-                            topic={e.topic}
-                            imageUrl={e.imageUrl}
-                            noOfLikes={e.likes.length}
-                            noOfComments={e.comments.length}
-                            userName={user.name as string}
-                            userImage={user.imageUrl}
-                            initialSaved={e.saved.some(e => e.userId === session?.user.id)}
-                            dateOfCreation={e.createdAt}
-                            key={e.id} />
-                        return <CardWithoutImage
-                            id={e.id}
-                            userId={id}
-                            title={e.title}
-                            content={e.content}
-                            topic={e.topic}
-                            noOfLikes={e.likes.length}
-                            noOfComments={e.comments.length}
-                            userName={user.name as string}
-                            userImage={user.imageUrl}
-                            initialSaved={e.saved.some(e => e.userId === session?.user.id)}
-                            dateOfCreation={e.createdAt}
-                            key={e.id}
-                        />
-                    })}
-                </div>
+                {user.blogs.length === 0 ? <div className="flex h-52 justify-center items-center text-xl text-gray-400">
+                    <span>No blogs yet</span>
+                </div> :
+                    <div className="w-7/12 mx-auto grid grid-cols-3 gap-4 mb-20">
+                        {user.blogs.map(e => {
+                            if (e.imageUrl) return <CardWithImage
+                                id={e.id}
+                                userId={id}
+                                title={e.title}
+                                content={e.content}
+                                topic={e.topic}
+                                imageUrl={e.imageUrl}
+                                noOfLikes={e.likes.length}
+                                noOfComments={e.comments.length}
+                                userName={user.name as string}
+                                userImage={user.imageUrl}
+                                initialSaved={e.saved.some(e => e.userId === session?.user.id)}
+                                dateOfCreation={e.createdAt}
+                                key={e.id} />
+                            return <CardWithoutImage
+                                id={e.id}
+                                userId={id}
+                                title={e.title}
+                                content={e.content}
+                                topic={e.topic}
+                                noOfLikes={e.likes.length}
+                                noOfComments={e.comments.length}
+                                userName={user.name as string}
+                                userImage={user.imageUrl}
+                                initialSaved={e.saved.some(e => e.userId === session?.user.id)}
+                                dateOfCreation={e.createdAt}
+                                key={e.id}
+                            />
+                        })}
+                    </div>}
             </>
         )
     } catch {
