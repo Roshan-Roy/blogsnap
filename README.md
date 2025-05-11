@@ -2,7 +2,7 @@
 
 **BlogSnap** is a full-stack blogging platform built with **Next.js**, designed for sharing ideas, stories, and opinions through beautifully styled blog posts. It includes dynamic social features like likes, comments, saves, and user interactions — all backed by robust authentication and cloud integration.
 
-🔗 **Live Preview**: [https://blogsnap.vercel.app](https://google.com)
+🔗 **Live Preview**: [https://blogsnap.vercel.app](https://blogsnap.vercel.app)
 
 ---
 
