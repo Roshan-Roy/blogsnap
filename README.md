@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📸 BlogSnap
 
-## Getting Started
+**BlogSnap** is a full-stack blogging platform built with **Next.js**, designed for sharing ideas, stories, and opinions through beautifully styled blog posts. It includes dynamic social features like likes, comments, saves, and user interactions — all backed by robust authentication and cloud integration.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Core Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🔐 Google Sign-In with **Auth.js**
+- 📝 Create, edit, and delete blog posts
+- ❤️ Like blogs and engage with content
+- 💬 Comment system for user interaction
+- 📌 Save blogs to read later
+- 👥 Follow and unfollow other users
+- 📷 Upload blog images and profile pictures via **Cloudinary**
+- ✉️ **Send Feedback** – users can submit feedback visible to specific admin users via email
+- ⚙️ Clean API routes using **Next.js Route Handlers**
+- 🎨 UI styled using **Tailwind CSS** and **Next UI**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Tech Stack
 
-## Learn More
+| Area               | Technology                     |
+|--------------------|--------------------------------|
+| **Frontend**        | Next.js, Tailwind CSS, Next UI |
+| **Backend**         | Next.js Route Handlers         |
+| **Authentication**  | Auth.js + Google OAuth         |
+| **Database**        | MongoDB + Prisma               |
+| **Media Storage**   | Cloudinary                     |
+| **Feedback System** | Custom form + Email routing    |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 💡 Highlights
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Modern stack** used to build a real-world social blogging experience
+- **Clean, scalable code** following best practices
+- **Rich user experience** through interactive features and cloud image support
+- **Admin-friendly** feedback management via email-based routing
+- **Practical authentication flow** using OAuth and session handling
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧠 Skills Demonstrated
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Full-stack web development with Next.js (App Router)
+- Integration with third-party services (Cloudinary, Google Auth)
+- RESTful API design using route handlers
+- Database modeling and ORM with Prisma
+- UI/UX design using utility-first CSS and component libraries
+- Secure and scalable feature implementation
+
+---
+
+## 🔗 Credits
+
+Built using:
+
+- [Next.js](https://nextjs.org/)
+- [MongoDB](https://www.mongodb.com/)
+- [Prisma](https://www.prisma.io/)
+- [Auth.js](https://authjs.dev/)
+- [Cloudinary](https://cloudinary.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Next UI](https://nextui.org/)
+
+---
+
+Made with 💻 and ☕ by **Roshan**
